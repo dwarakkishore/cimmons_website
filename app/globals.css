@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #1830e0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #4a4f63;
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-container px-5;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-1.5 text-sm font-semibold text-heading;
+  }
+
+  .eyebrow-dark {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-sm font-semibold text-white;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-btn bg-primary px-7 py-3.5 text-[17px] font-semibold text-white transition-all duration-300 hover:bg-heading;
+  }
+
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-btn bg-heading px-7 py-3.5 text-[17px] font-semibold text-white transition-all duration-300 hover:bg-primary;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-btn border border-black/15 px-7 py-3.5 text-[17px] font-semibold text-heading transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white;
+  }
+
+  .section-title {
+    @apply font-display font-semibold leading-[1.15] text-heading;
+  }
+}
+
+/* Marquee track duplicated content sits side-by-side */
+.marquee-track {
+  display: flex;
+  width: max-content;
+}
