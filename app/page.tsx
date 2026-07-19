@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Clients from "@/components/Clients";
 import Services from "@/components/Services";
 import Experience from "@/components/Experience";
 import Industries from "@/components/Industries";
@@ -19,6 +20,7 @@ export default function Home() {
       <main className="overflow-hidden">
         <Hero />
         <About />
+        <Clients />
         <Services />
         <Experience />
         <Industries />
