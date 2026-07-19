@@ -3,84 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useQuote } from "@/components/QuoteModal";
+import { CASE_STUDIES, type CaseStudy } from "@/lib/caseStudies";
 
-type Panel = {
-  n: string;
-  name: string;
-  img: string;
-  challenge: string;
-  solution: string;
-  results: string;
-};
+type Panel = CaseStudy;
 
-const PANELS: Panel[] = [
-  {
-    n: "01",
-    name: "Healthcare",
-    img: "/assets/img/hf-healthcare.webp",
-    challenge:
-      "Scaling patient support during peak seasons without losing the personal touch.",
-    solution:
-      "Deployed a 24/7 multilingual support team trained in healthcare communication.",
-    results:
-      "30% higher patient satisfaction and 50% faster response times.",
-  },
-  {
-    n: "02",
-    name: "Retail & E-Commerce",
-    img: "/assets/img/service1-scaled.webp",
-    challenge:
-      "Handling order and returns volume that spiked during major sale events.",
-    solution:
-      "Added flexible seasonal agents across chat, email and voice channels.",
-    results:
-      "40% faster order resolution and a clear lift in repeat purchases.",
-  },
-  {
-    n: "03",
-    name: "Technology",
-    img: "/assets/img/technology1.webp",
-    challenge:
-      "Growing product adoption outpaced the in-house support team's capacity.",
-    solution:
-      "Set up tier-1 and tier-2 technical support with fast escalation paths.",
-    results:
-      "35% drop in ticket backlog and higher onboarding completion rates.",
-  },
-  {
-    n: "04",
-    name: "Finance",
-    img: "/assets/img/service3.webp",
-    challenge:
-      "Delivering dependable, compliant support for sensitive customer accounts.",
-    solution:
-      "Built a compliance-first team for query resolution and fraud alerts.",
-    results:
-      "Improved trust scores and quicker dispute turnaround times.",
-  },
-  {
-    n: "05",
-    name: "Real Estate",
-    img: "/assets/img/service4.webp",
-    challenge:
-      "Slow lead follow-up was costing the agency qualified enquiries.",
-    solution:
-      "Ran proactive lead qualification and appointment scheduling around the clock.",
-    results:
-      "45% more booked viewings and a fuller, better-qualified pipeline.",
-  },
-  {
-    n: "06",
-    name: "IT & SaaS",
-    img: "/assets/img/technology2.webp",
-    challenge:
-      "Users needed round-the-clock help across multiple time zones.",
-    solution:
-      "Provided omnichannel support with 24/7 coverage and clear SLAs.",
-    results:
-      "Higher retention and steadily rising customer satisfaction scores.",
-  },
-];
+const PANELS: Panel[] = CASE_STUDIES;
 
 function ExpandedContent({ p }: { p: Panel }) {
   const rows = [
@@ -102,7 +29,7 @@ function ExpandedContent({ p }: { p: Panel }) {
         ))}
       </div>
       <a
-        href="#case-studies"
+        href={`/case-studies/${p.slug}/`}
         className="mt-7 inline-flex items-center gap-2 font-semibold text-white transition-colors hover:text-primary"
       >
         Read Full Case Study
