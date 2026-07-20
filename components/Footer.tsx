@@ -15,7 +15,7 @@ const QUICK = [
 
 export default function Footer() {
   return (
-    <footer className="bg-ink pt-20 text-white/70">
+    <footer className="border-t border-black/10 bg-gray-50 pt-20 text-ink/70">
       <div className="container-x">
         <div className="grid grid-cols-1 gap-12 pb-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
           {/* brand + contact */}
@@ -75,7 +75,7 @@ export default function Footer() {
 
           {/* useful links */}
           <div>
-            <h4 className="font-display text-lg font-semibold text-white">
+            <h4 className="font-display text-lg font-semibold text-ink">
               Company
             </h4>
             <ul className="mt-6 space-y-3 text-sm">
@@ -91,7 +91,7 @@ export default function Footer() {
 
           {/* quick links */}
           <div>
-            <h4 className="font-display text-lg font-semibold text-white">
+            <h4 className="font-display text-lg font-semibold text-ink">
               Services
             </h4>
             <ul className="mt-6 space-y-3 text-sm">
@@ -106,7 +106,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-7 text-sm sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-black/10 py-7 text-sm sm:flex-row">
           <p>
             © 2020–{new Date().getFullYear()} Cimmons Integrated Services. All
             Rights Reserved.
