@@ -56,7 +56,7 @@ export default function Clients() {
                 alt={c.name}
                 width={200}
                 height={80}
-                className="h-10 w-auto object-contain opacity-90 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-12"
+                className="h-10 w-auto object-contain md:h-12"
               />
             </div>
           ))}
