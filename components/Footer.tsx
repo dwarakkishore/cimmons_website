@@ -22,9 +22,9 @@ export default function Footer() {
           <div>
             <Image
               src="/assets/img/cimmon-logo.png"
-              alt="CIMMON"
-              width={170}
-              height={97}
+              alt="CIMMONS"
+              width={158}
+              height={94}
               className="h-14 w-auto"
             />
             <p className="mt-6 max-w-sm text-sm leading-relaxed">

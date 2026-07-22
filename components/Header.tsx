@@ -85,9 +85,9 @@ export default function Header() {
         <a href="/#home" className="flex items-center">
           <Image
             src="/assets/img/cimmon-logo.png"
-            alt="CIMMON"
-            width={200}
-            height={114}
+            alt="CIMMONS"
+            width={158}
+            height={94}
             className="h-16 w-auto"
             priority
           />
