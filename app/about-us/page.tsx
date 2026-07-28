@@ -6,9 +6,10 @@ import Cta from "@/components/Cta";
 import Counter from "@/components/Counter";
 
 export const metadata: Metadata = {
-  title: "About Us – CIMMON | BPO & Call Center Services",
+  title: "About Cimmons — ISO-Certified BPO in Bengaluru",
   description:
     "Cimmons is one of the leading BPO | BPM and Call Center service providers in India, based in Bangalore — delivering excellent, immediate customer solutions 24/7, 365 days a year.",
+  alternates: { canonical: "/about-us/" },
 };
 
 const STATS = [

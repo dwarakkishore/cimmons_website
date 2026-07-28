@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useQuote } from "@/components/QuoteModal";
-import { CASE_STUDIES, type CaseStudy } from "@/lib/caseStudies";
+import { SECTORS, type Sector } from "@/lib/sectors";
 
-type Panel = CaseStudy;
+type Panel = Sector;
 
-const PANELS: Panel[] = CASE_STUDIES;
+const PANELS: Panel[] = SECTORS;
 
 function ExpandedContent({ p }: { p: Panel }) {
   const rows = [
@@ -29,11 +29,17 @@ function ExpandedContent({ p }: { p: Panel }) {
         ))}
       </div>
       <a
-        href={`/case-studies/${p.slug}/`}
-        className="mt-7 inline-flex items-center gap-2 font-semibold text-white transition-colors hover:text-primary"
+        href={`/sectors/${p.slug}/`}
+        className="group mt-7 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-transparent hover:bg-primary"
       >
-        Read Full Case Study
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        Explore Sector
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          className="transition-transform duration-300 group-hover:translate-x-1"
+        >
           <path
             d="M5 12h14M13 6l6 6-6 6"
             stroke="currentColor"
@@ -61,8 +67,10 @@ export default function Services() {
           </h2>
         </div>
 
-        {/* Desktop: horizontal expanding accordion */}
-        <div className="mt-14 hidden gap-3 md:flex md:h-[540px]">
+        {/* Desktop: horizontal expanding accordion.
+            Seven panels need real width, so this only kicks in at lg — below
+            that the stacked cards read better. */}
+        <div className="mt-14 hidden gap-3 lg:flex lg:h-[540px]">
           {PANELS.map((p, i) => {
             const isActive = i === active;
             return (
@@ -71,13 +79,13 @@ export default function Services() {
                 onMouseEnter={() => setActive(i)}
                 onClick={() => setActive(i)}
                 style={{ flexGrow: isActive ? 7 : 1, flexBasis: 0 }}
-                className="group relative min-w-[70px] cursor-pointer overflow-hidden rounded-[18px] transition-[flex-grow] duration-500 ease-in-out"
+                className="group relative min-w-[64px] cursor-pointer overflow-hidden rounded-[18px] transition-[flex-grow] duration-500 ease-in-out"
               >
                 <Image
                   src={p.img}
                   alt={p.name}
                   fill
-                  sizes="(min-width: 768px) 60vw, 100vw"
+                  sizes="(min-width: 1024px) 55vw, 100vw"
                   className="object-cover"
                 />
                 <div
@@ -117,8 +125,8 @@ export default function Services() {
           })}
         </div>
 
-        {/* Mobile: stacked cards */}
-        <div className="mt-12 space-y-5 md:hidden">
+        {/* Mobile & tablet: stacked cards */}
+        <div className="mt-12 space-y-5 lg:hidden">
           {PANELS.map((p) => (
             <div key={p.n} className="relative overflow-hidden rounded-[18px]">
               <Image
@@ -144,7 +152,7 @@ export default function Services() {
         {/* Footer row: custom solutions + Let's Talk circle */}
         <div className="mt-12 flex flex-wrap items-center justify-end gap-6">
           <p className="max-w-[200px] text-right text-white/70">
-            Need custom solutions for your industry
+            Need custom solutions for your sector
           </p>
           <button
             onClick={openQuote}

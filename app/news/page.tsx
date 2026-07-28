@@ -1,68 +1,22 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Cta from "@/components/Cta";
+import { sortedPosts } from "@/lib/posts";
 
 export const metadata: Metadata = {
-  title: "News – CIMMON | BPO & Call Center Insights",
+  title: "Insights & News — BPO & Customer Support",
   description:
     "The latest news, insights and success stories from Cimmons — customer experience, quality assurance, BPO strategy and training in the call center world.",
+  alternates: { canonical: "/news/" },
 };
 
 /* ------------------------------------------------------------------ */
-/* Data                                                                */
+/* Data — posts live in lib/posts.ts (shared with /news/[slug] and the */
+/* homepage Blog section)                                              */
 /* ------------------------------------------------------------------ */
-
-type Article = {
-  title: string;
-  date: string;
-  author: string;
-  excerpt: string;
-  link: string;
-  img: string;
-};
-
-const ARTICLES: Article[] = [
-  {
-    title:
-      "Call Center Connect – Bridging the Gap Between Customer Experience and Technology",
-    date: "February 20, 2025",
-    author: "Cimmons",
-    excerpt:
-      "In the fast-evolving world of customer service, call centers sit at the intersection of people and technology — here's how to bridge that gap.",
-    link: "https://www.cimmons.in/call-center-connect/",
-    img: "/assets/img/hf-blog1.webp",
-  },
-  {
-    title:
-      "Ensuring Excellence: The Crucial Role of Quality Assurance in Call Center Operations",
-    date: "February 23, 2024",
-    author: "Cimmons",
-    excerpt:
-      "Quality assurance is the backbone of consistent, high-performing call center operations. We break down why it matters and how to get it right.",
-    link: "https://www.cimmons.in/role-of-quality-assurance-in-call-center-operations/",
-    img: "/assets/img/hf-blog2.webp",
-  },
-  {
-    title: "Choosing the Right BPO Partner",
-    date: "February 19, 2024",
-    author: "Cimmons",
-    excerpt:
-      "Selecting the right BPO partner can make or break your customer experience. Here's what to look for before you sign.",
-    link: "https://www.cimmons.in/right-bpo-partner/",
-    img: "/assets/img/hf-blog3.webp",
-  },
-  {
-    title: "Training and Development in Call Centers",
-    date: "February 15, 2024",
-    author: "Cimmons",
-    excerpt:
-      "Ongoing training and development keep agents sharp and customers happy. A look at why continuous learning is non-negotiable.",
-    link: "https://www.cimmons.in/training-and-development-in-call-centers/",
-    img: "/assets/img/hf-blog1.webp",
-  },
-];
 
 const TOPICS = [
   "Customer Experience",
@@ -103,7 +57,7 @@ function ArrowIcon() {
 /* ------------------------------------------------------------------ */
 
 export default function NewsPage() {
-  const [featured, ...rest] = ARTICLES;
+  const [featured, ...rest] = sortedPosts();
 
   return (
     <>
@@ -179,7 +133,7 @@ export default function NewsPage() {
                 <div className="flex items-center gap-4 text-xs font-medium text-body">
                   <span className="flex items-center gap-1.5">
                     <CalendarIcon />
-                    {featured.date}
+                    {featured.dateDisplay}
                   </span>
                   <span>By {featured.author}</span>
                 </div>
@@ -190,16 +144,14 @@ export default function NewsPage() {
                   {featured.excerpt}
                 </p>
                 <div className="mt-8">
-                  <a
-                    href={featured.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href={`/news/${featured.slug}/`}
                     className="btn-primary"
                     aria-label={`Read article: ${featured.title}`}
                   >
                     Read Article
                     <ArrowIcon />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </article>
@@ -224,7 +176,7 @@ export default function NewsPage() {
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {rest.map((article) => (
                 <article
-                  key={article.link}
+                  key={article.slug}
                   className="group overflow-hidden rounded-[24px] border border-black/10 bg-white transition-shadow hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
                 >
                   <div className="relative h-56 overflow-hidden">
@@ -239,7 +191,7 @@ export default function NewsPage() {
                     <div className="flex items-center gap-4 text-xs font-medium text-body">
                       <span className="flex items-center gap-1.5">
                         <CalendarIcon />
-                        {article.date}
+                        {article.dateDisplay}
                       </span>
                       <span>By {article.author}</span>
                     </div>
@@ -247,16 +199,14 @@ export default function NewsPage() {
                       {article.title}
                     </h3>
                     <p className="mt-3 text-sm text-body">{article.excerpt}</p>
-                    <a
-                      href={article.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      href={`/news/${article.slug}/`}
                       className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-heading transition-colors hover:text-primary"
                       aria-label={`Read more: ${article.title}`}
                     >
                       Read More
                       <ArrowIcon />
-                    </a>
+                    </Link>
                   </div>
                 </article>
               ))}

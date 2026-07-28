@@ -1,18 +1,25 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Cta from "@/components/Cta";
 import Counter from "@/components/Counter";
+import JsonLd from "@/components/JsonLd";
+import SectorIcon from "@/components/SectorIcon";
+import { SECTORS } from "@/lib/sectors";
+import { CASE_STUDIES } from "@/lib/caseStudies";
+import { absUrl, breadcrumbSchema } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Industries – CIMMON | BPO & Call Center Services",
+  title: "Sectors We Serve — BPO Solutions by Sector",
   description:
-    "From banking and healthcare to logistics and e-commerce — Cimmons delivers domain-tuned BPO, BPM and call center solutions across every major industry.",
+    "Seven sectors, seven playbooks — healthcare, retail & e-commerce, technology, finance, real estate, IT & SaaS and AI data services. Domain-tuned BPO, BPM and call center solutions from Cimmons.",
+  alternates: { canonical: "/sectors/" },
 };
 
 /* ------------------------------------------------------------------ */
-/* Icons                                                               */
+/* Icons (secondary industry lists)                                    */
 /* ------------------------------------------------------------------ */
 
 const icon = (paths: ReactNode) => (
@@ -302,66 +309,112 @@ function ArrowIcon({ size = 14 }: { size?: number }) {
 /* Page                                                                */
 /* ------------------------------------------------------------------ */
 
-export default function IndustriesPage() {
+export default function SectorsPage() {
+  const breadcrumbs = breadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Sectors", path: "/sectors/" },
+  ]);
+
+  const sectorList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Sectors served by Cimmons",
+    itemListElement: SECTORS.map((s, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: s.name,
+      url: absUrl(`/sectors/${s.slug}/`),
+    })),
+  };
+
   return (
     <>
+      <JsonLd data={[breadcrumbs, sectorList]} />
       <Header />
       <main className="overflow-hidden">
         {/* Page banner + breadcrumb */}
         <section className="bg-cream pb-16 pt-32 lg:pb-20 lg:pt-40">
           <div className="container-x text-center">
             <h1 className="section-title text-[36px] sm:text-[46px] lg:text-[56px]">
-              Industries
+              Sectors We Serve
             </h1>
             <nav className="mt-5 flex items-center justify-center gap-2 text-[15px] font-semibold">
-              <a href="/" className="text-body transition-colors hover:text-primary">
+              <Link href="/" className="text-body transition-colors hover:text-primary">
                 Home
-              </a>
+              </Link>
               <span className="text-body/50">/</span>
-              <span className="text-primary">Industries</span>
+              <span className="text-primary">Sectors</span>
             </nav>
           </div>
         </section>
 
-        {/* Section A — Core BPO | BPM Industries (white) */}
-        <section
-          id="core-industries"
-          className="scroll-mt-24 bg-white py-20 lg:py-28"
-        >
+        {/* Section A — the seven sectors (white) */}
+        <section id="our-sectors" className="scroll-mt-24 bg-white py-20 lg:py-28">
           <div className="container-x">
             <div className="mx-auto max-w-3xl text-center">
               <span className="eyebrow mb-6">
                 <span className="h-2 w-2 rounded-full bg-primary" />
-                Industries
+                Our Sectors
               </span>
               <h2 className="section-title text-[30px] sm:text-[38px] lg:text-[44px]">
-                Core BPO | BPM Industries
+                Seven sectors. Seven playbooks.
               </h2>
               <p className="mt-6 text-lg text-body">
-                Deep domain expertise across the industries we know best — so
-                every process we run for you speaks your sector&rsquo;s
-                language from day one.
+                Deep domain expertise across the sectors we know best — so every
+                process we run for you speaks your sector&rsquo;s language from
+                day one. Open any sector to see exactly what we run, how we run
+                it, and the proof behind it.
               </p>
             </div>
 
             <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {CORE_INDUSTRIES.map((ind) => (
-                <div
-                  key={ind.name}
-                  className="group rounded-[24px] border border-black/10 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:bg-cream hover:shadow-[0_20px_50px_rgba(0,0,0,0.06)]"
+              {SECTORS.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/sectors/${s.slug}/`}
+                  className="group flex flex-col rounded-[24px] border border-black/10 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:bg-cream hover:shadow-[0_20px_50px_rgba(0,0,0,0.06)]"
                 >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cream text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
-                    {ind.icon}
-                  </span>
-                  <h3 className="mt-6 font-display text-xl font-semibold text-heading">
-                    {ind.name}
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cream text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
+                      <SectorIcon name={s.icon} />
+                    </span>
+                    <span className="font-display text-sm font-bold text-gold">
+                      {s.n}
+                    </span>
+                  </div>
+                  <h3 className="mt-6 font-display text-xl font-semibold text-heading transition-colors group-hover:text-primary">
+                    {s.name}
                   </h3>
                   <div className="mt-3 h-px w-10 bg-gold/70" />
-                  <p className="mt-4 text-[15px] leading-relaxed text-body">
-                    {ind.desc}
+                  <p className="mt-4 flex-1 text-[15px] leading-relaxed text-body">
+                    {s.summary}
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-heading transition-colors group-hover:text-primary">
+                    Explore Sector
+                    <ArrowIcon size={14} />
+                  </span>
+                </Link>
+              ))}
+
+              {/* Filler tile to complete the grid */}
+              <Link
+                href="/contact/"
+                className="group flex flex-col justify-between rounded-[24px] bg-ink p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)]"
+              >
+                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 text-gold">
+                  <ArrowIcon size={20} />
+                </span>
+                <div>
+                  <h3 className="mt-6 font-display text-xl font-semibold text-white transition-colors group-hover:text-gold">
+                    Your sector, next
+                  </h3>
+                  <p className="mt-4 text-[15px] leading-relaxed text-white/60">
+                    Don&rsquo;t see yours? Tell us how your business works and
+                    we&rsquo;ll build the team, the process and the stack around
+                    it.
                   </p>
                 </div>
-              ))}
+              </Link>
             </div>
           </div>
         </section>
@@ -394,16 +447,59 @@ export default function IndustriesPage() {
           </div>
         </section>
 
-        {/* Section B — Industries We Serve (cream) */}
+        {/* Section B — Core BPO | BPM Industries (cream) */}
         <section
-          id="industries-we-serve"
+          id="core-industries"
           className="scroll-mt-24 bg-cream py-20 lg:py-28"
         >
           <div className="container-x">
             <div className="mx-auto max-w-3xl text-center">
               <span className="eyebrow mb-6">
                 <span className="h-2 w-2 rounded-full bg-primary" />
-                Beyond The Core
+                Beyond The Seven
+              </span>
+              <h2 className="section-title text-[30px] sm:text-[38px] lg:text-[44px]">
+                Core BPO | BPM Industries
+              </h2>
+              <p className="mt-6 text-lg text-body">
+                Our seven lead sectors sit on top of a much broader BPO and BPM
+                practice. These are the industries whose processes, regulations
+                and vocabulary our teams already know.
+              </p>
+            </div>
+
+            <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {CORE_INDUSTRIES.map((ind) => (
+                <div
+                  key={ind.name}
+                  className="group rounded-[24px] border border-black/10 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_20px_50px_rgba(0,0,0,0.06)]"
+                >
+                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cream text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
+                    {ind.icon}
+                  </span>
+                  <h3 className="mt-6 font-display text-xl font-semibold text-heading">
+                    {ind.name}
+                  </h3>
+                  <div className="mt-3 h-px w-10 bg-gold/70" />
+                  <p className="mt-4 text-[15px] leading-relaxed text-body">
+                    {ind.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section C — Industries We Serve (white) */}
+        <section
+          id="industries-we-serve"
+          className="scroll-mt-24 bg-white py-20 lg:py-28"
+        >
+          <div className="container-x">
+            <div className="mx-auto max-w-3xl text-center">
+              <span className="eyebrow mb-6">
+                <span className="h-2 w-2 rounded-full bg-primary" />
+                Everywhere Else
               </span>
               <h2 className="section-title text-[30px] sm:text-[38px] lg:text-[44px]">
                 Industries We Serve
@@ -420,9 +516,9 @@ export default function IndustriesPage() {
               {SERVE_INDUSTRIES.map((ind) => (
                 <div
                   key={ind.name}
-                  className="group flex items-center gap-4 rounded-2xl border border-black/5 bg-white px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.07)]"
+                  className="group flex items-center gap-4 rounded-2xl border border-black/5 bg-cream px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.07)]"
                 >
-                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-cream text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
+                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-white text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
                     {ind.icon}
                   </span>
                   <span className="font-display text-[15px] font-semibold text-heading">
@@ -432,8 +528,8 @@ export default function IndustriesPage() {
               ))}
 
               {/* Filler tile to complete the grid */}
-              <a
-                href="/#contact"
+              <Link
+                href="/contact/"
                 className="group flex items-center gap-4 rounded-2xl bg-ink px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.2)]"
               >
                 <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-white/10 text-gold">
@@ -442,7 +538,50 @@ export default function IndustriesPage() {
                 <span className="font-display text-[15px] font-semibold text-white transition-colors group-hover:text-gold">
                   Your Industry, Next
                 </span>
-              </a>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Proven results — internal links to sector case studies (cream) */}
+        <section className="bg-cream py-20 lg:py-28">
+          <div className="container-x">
+            <div className="mx-auto max-w-3xl text-center">
+              <span className="eyebrow mb-6">
+                <span className="h-2 w-2 rounded-full bg-primary" />
+                Proof, Not Promises
+              </span>
+              <h2 className="section-title text-[30px] sm:text-[38px] lg:text-[44px]">
+                Real results, sector by sector.
+              </h2>
+              <p className="mt-6 text-lg text-body">
+                Every sector above is backed by work we&rsquo;ve actually done.
+                Read the case studies — the challenge, what we built, and the
+                numbers that came out the other side.
+              </p>
+            </div>
+            <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {CASE_STUDIES.map((cs) => (
+                <Link
+                  key={cs.slug}
+                  href={`/case-studies/${cs.slug}/`}
+                  className="group rounded-[24px] border border-black/10 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_20px_50px_rgba(0,0,0,0.06)]"
+                >
+                  <span className="font-display text-sm font-bold text-gold">
+                    {cs.n}
+                  </span>
+                  <h3 className="mt-3 font-display text-xl font-semibold text-heading transition-colors group-hover:text-primary">
+                    {cs.name}
+                  </h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-body">
+                    {cs.results}
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-heading transition-colors group-hover:text-primary">
+                    Read Case Study
+                    <ArrowIcon size={14} />
+                  </span>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
@@ -456,20 +595,20 @@ export default function IndustriesPage() {
                 Every Domain Welcome
               </span>
               <h2 className="section-title text-[30px] sm:text-[38px] lg:text-[44px]">
-                Don&rsquo;t see your industry? We adapt to your domain.
+                Don&rsquo;t see your sector? We adapt to your domain.
               </h2>
               <p className="mt-6 text-lg text-body">
                 Tell us how your business works, and we&rsquo;ll build a team,
                 a process and a technology stack that fits it perfectly.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                <a href="/#contact" className="btn-primary">
+                <Link href="/contact/" className="btn-primary">
                   Talk to Us
                   <ArrowIcon size={18} />
-                </a>
-                <a href="/#contact" className="btn-outline">
+                </Link>
+                <Link href="/contact/" className="btn-outline">
                   Business Enquiry
-                </a>
+                </Link>
               </div>
             </div>
           </div>

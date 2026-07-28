@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useQuote } from "@/components/QuoteModal";
+import { SECTORS } from "@/lib/sectors";
 
 type NavItem = {
   label: string;
@@ -24,11 +25,14 @@ const NAV: NavItem[] = [
     ],
   },
   {
-    label: "Industries",
-    href: "/industries",
+    label: "Sectors",
+    href: "/sectors",
     children: [
-      { label: "Core Industries", href: "/industries#core-industries" },
-      { label: "Industries We Serve", href: "/industries#industries-we-serve" },
+      ...SECTORS.map((s) => ({
+        label: s.shortName,
+        href: `/sectors/${s.slug}/`,
+      })),
+      { label: "All Sectors", href: "/sectors" },
     ],
   },
   {
@@ -71,7 +75,7 @@ export default function Header() {
       className={`fixed top-0 z-50 w-full border-b transition-all duration-300 ${
         scrolled
           ? "border-black/5 bg-white/90 shadow-[0_10px_30px_rgba(0,0,0,0.06)] backdrop-blur"
-          : "border-transparent bg-transparent"
+          : "border-transparent bg-white"
       }`}
     >
       {/* Scroll progress indicator */}

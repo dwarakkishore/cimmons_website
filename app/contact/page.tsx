@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { SOCIAL_LINKS } from "@/lib/site";
 
 /* ------------------------------------------------------------------ */
 /* Icon helpers                                                        */
@@ -88,8 +89,9 @@ function ArrowIcon({ size = 18 }: { size?: number }) {
 }
 
 /* Social icons (filled, small) */
-const social = (label: string, path: ReactNode) => ({
+const social = (label: string, href: string, path: ReactNode) => ({
   label,
+  href,
   svg: (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       {path}
@@ -99,23 +101,28 @@ const social = (label: string, path: ReactNode) => ({
 
 const SOCIALS = [
   social(
-    "Twitter",
+    "X (Twitter)",
+    SOCIAL_LINKS.x,
     <path d="M23 4.9c-.8.4-1.7.6-2.6.8a4.5 4.5 0 0 0 2-2.5c-.9.5-1.9.9-2.9 1.1a4.5 4.5 0 0 0-7.7 4.1A12.8 12.8 0 0 1 2.5 3.7a4.5 4.5 0 0 0 1.4 6 4.4 4.4 0 0 1-2-.5v.1a4.5 4.5 0 0 0 3.6 4.4 4.5 4.5 0 0 1-2 .1 4.5 4.5 0 0 0 4.2 3.1A9 9 0 0 1 1 18.7a12.7 12.7 0 0 0 6.9 2c8.3 0 12.8-6.8 12.8-12.8v-.6c.9-.6 1.6-1.4 2.3-2.4z" />
   ),
   social(
     "Facebook",
+    SOCIAL_LINKS.facebook,
     <path d="M14 8.5V6.8c0-.8.6-1 1-1h2.6V2h-3.5C10.9 2 10 4.4 10 5.9v2.6H7.7V12H10v10h4V12h3l.4-3.5H14z" />
   ),
   social(
     "LinkedIn",
+    SOCIAL_LINKS.linkedin,
     <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8.16h4.56V23H.22zM8.34 8.16h4.37v2.03h.06c.61-1.15 2.1-2.37 4.32-2.37 4.62 0 5.47 3.04 5.47 7v8.18h-4.55v-7.25c0-1.73-.03-3.96-2.41-3.96-2.42 0-2.79 1.89-2.79 3.83V23H8.34z" />
   ),
   social(
     "Instagram",
+    SOCIAL_LINKS.instagram,
     <path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2a3.8 3.8 0 0 1-.9 1.4c-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4a3.8 3.8 0 0 1-1.4-.9 3.8 3.8 0 0 1-.9-1.4c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.1a6.7 6.7 0 1 0 0 13.4 6.7 6.7 0 0 0 0-13.4zm0 11a4.3 4.3 0 1 1 0-8.6 4.3 4.3 0 0 1 0 8.6zm8.5-11.3a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0z" />
   ),
   social(
     "YouTube",
+    SOCIAL_LINKS.youtube,
     <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12c0 2 .2 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.3-1.9.5-3.8.5-5.8s-.2-3.9-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z" />
   ),
 ];
@@ -253,27 +260,10 @@ export default function ContactPage() {
     <>
       <Header />
       <main className="overflow-hidden">
-        {/* Page banner + breadcrumb */}
-        <section className="bg-cream pb-16 pt-32 lg:pb-20 lg:pt-40">
-          <div className="container-x text-center">
-            <h1 className="section-title text-[36px] sm:text-[46px] lg:text-[56px]">
-              Contact Us
-            </h1>
-            <nav className="mt-5 flex items-center justify-center gap-2 text-[15px] font-semibold">
-              <a
-                href="/"
-                className="text-body transition-colors hover:text-primary"
-              >
-                Home
-              </a>
-              <span className="text-body/50">/</span>
-              <span className="text-primary">Contact Us</span>
-            </nav>
-          </div>
-        </section>
+        {/* Page banner + breadcrumb removed */}
 
         {/* Contact info cards (white) */}
-        <section className="bg-white py-20 lg:py-28">
+        <section className="bg-white pb-20 pt-32 lg:pb-28 lg:pt-40">
           <div className="container-x">
             <div className="mx-auto max-w-3xl text-center">
               <span className="eyebrow mb-6">
@@ -537,7 +527,9 @@ export default function ContactPage() {
                       {SOCIALS.map((s) => (
                         <a
                           key={s.label}
-                          href="#"
+                          href={s.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           aria-label={s.label}
                           className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-primary hover:text-white"
                         >

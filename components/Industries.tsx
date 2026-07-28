@@ -5,6 +5,7 @@ import { useState } from "react";
 
 type Industry = {
   name: string;
+  slug: string;
   desc: string;
   quote: string;
   author: string;
@@ -15,6 +16,7 @@ type Industry = {
 const INDUSTRIES: Industry[] = [
   {
     name: "Healthcare",
+    slug: "healthcare",
     desc: "HIPAA-compliant patient support, appointment scheduling, and medical billing assistance that improve efficiency and patient satisfaction.",
     quote:
       "Their service quality and professionalism went beyond what we expected — our customer engagement has never been stronger.",
@@ -24,6 +26,7 @@ const INDUSTRIES: Industry[] = [
   },
   {
     name: "E-commerce & Retail",
+    slug: "retail-ecommerce",
     desc: "Order management, returns handling, and omnichannel customer care that keep shoppers happy through every peak season.",
     quote:
       "They scaled effortlessly through our busiest sale periods and kept our customers delighted the whole way.",
@@ -33,6 +36,7 @@ const INDUSTRIES: Industry[] = [
   },
   {
     name: "Finance & Banking",
+    slug: "finance",
     desc: "Secure, compliant support for account queries, transactions, and fraud alerts your customers can rely on.",
     quote:
       "Dependable, compliance-first support that our customers genuinely trust day in and day out.",
@@ -42,6 +46,7 @@ const INDUSTRIES: Industry[] = [
   },
   {
     name: "IT & SaaS",
+    slug: "it-saas",
     desc: "Tier-1 and tier-2 technical support, user onboarding, and omnichannel ticket resolution for fast-growing software teams.",
     quote:
       "They became a true extension of our product team and lifted our support satisfaction scores fast.",
@@ -68,13 +73,30 @@ export default function Industries() {
         {/* Heading + intro */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start">
           <h2 className="section-title text-[30px] text-white sm:text-[38px] lg:text-[48px]">
-            Industries we serve
+            Sectors we serve
           </h2>
-          <p className="max-w-md text-white/60 lg:pt-2">
-            We provide specialized Call Center &amp; BPO solutions tailored to a
-            wide range of industries. Our expertise ensures seamless operations
-            and business growth across multiple sectors.
-          </p>
+          <div className="max-w-md lg:pt-2">
+            <p className="text-white/60">
+              We provide specialized Call Center &amp; BPO solutions tailored to
+              a wide range of industries. Our expertise ensures seamless
+              operations and business growth across multiple sectors.
+            </p>
+            <a
+              href="/sectors/"
+              className="mt-5 inline-flex items-center gap-2 font-semibold text-gold transition-colors hover:text-white"
+            >
+              View all seven sectors
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-[280px_1fr] lg:gap-16">
@@ -139,9 +161,26 @@ export default function Industries() {
           <div>
             <div className="flex items-start gap-3">
               <span className="mt-2 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-gold" />
-              <p className="max-w-lg text-lg leading-relaxed text-white/80">
-                {current.desc}
-              </p>
+              <div className="max-w-lg">
+                <p className="text-lg leading-relaxed text-white/80">
+                  {current.desc}
+                </p>
+                <a
+                  href={`/sectors/${current.slug}/`}
+                  className="mt-4 inline-flex items-center gap-2 font-semibold text-gold transition-colors hover:text-white"
+                >
+                  Explore {current.name}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M5 12h14M13 6l6 6-6 6"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </a>
+              </div>
             </div>
 
             <div className="relative mt-10">

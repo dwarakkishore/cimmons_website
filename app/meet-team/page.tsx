@@ -5,9 +5,10 @@ import Footer from "@/components/Footer";
 import Cta from "@/components/Cta";
 
 export const metadata: Metadata = {
-  title: "Meet Our Team – CIMMON | BPO & Call Center Services",
+  title: "Meet the Team — Cimmons Leadership",
   description:
     "Meet the Cimmons team — a young, like-minded group of professionals united by the idea of creating an innovative future in customer experience.",
+  alternates: { canonical: "/meet-team/" },
 };
 
 type Member = {

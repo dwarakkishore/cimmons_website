@@ -5,11 +5,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Cta from "@/components/Cta";
 import Counter from "@/components/Counter";
+import JsonLd from "@/components/JsonLd";
+import { absUrl, faqSchema } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Services – CIMMON | BPO & Call Center Services",
+  title: "Call Center Services — Inbound, Outbound & Non-Voice",
   description:
     "Inbound, outbound, blended and non-voice call center services from Cimmons — 24×7 ready agents, analytics-driven customer satisfaction and end-to-end BPO solutions.",
+  alternates: { canonical: "/services/" },
 };
 
 /* ------------------------------------------------------------------ */
@@ -49,6 +52,7 @@ type Service = {
   name: string;
   title: string;
   desc: string;
+  desc2?: string; // second paragraph — deeper, keyword-bearing detail
   points: string[];
   img: string;
   imgAlt: string;
@@ -65,6 +69,8 @@ const SERVICES: Service[] = [
     name: "Inbound",
     title: "Inbound Call Center Services",
     desc: "With a fast and efficient inbound call center, you'll never miss another call again. We deliver end-to-end solutions — from the initial welcome call all the way through service closure — backed by analytics monitoring that tracks customer satisfaction at every step.",
+    desc2:
+      "Inbound is where reputations are won or lost: the customer calls with a problem, and what happens in the next three minutes decides whether they stay. Our inbound teams handle customer support, technical helpdesk, order tracking, billing enquiries and appointment scheduling for clients across healthcare, e-commerce and SaaS — with capacity that flexes for seasonal spikes, so a festive-sale surge or flu-season rush never turns into a hold queue. For one healthcare client, that flexibility lifted patient satisfaction 30% while halving response times.",
     points: [
       "End-to-end coverage, from welcome call to service closure",
       "24×7 ready agents, every day of the year",
@@ -83,6 +89,8 @@ const SERVICES: Service[] = [
     name: "Outbound",
     title: "Outbound Call Center Services",
     desc: "Our professionals engage prospects and customers with well-timed, active outreach — increasing revenue and retention by turning every conversation into an opportunity for your business.",
+    desc2:
+      "Outbound lives and dies on timing. A lead called within minutes converts; the same lead called tomorrow has already talked to your competitor. We run telemarketing, lead qualification, appointment setting, renewal and win-back campaigns with speed-to-first-call as the discipline — for a real-estate client, putting that first call inside the moment of enquiry raised booked viewings by 45%. Every campaign runs on clean lists, tested scripts and honest reporting, so you always know what your pipeline actually looks like.",
     points: [
       "Telesales & telemarketing campaigns",
       "Lead generation that fills your pipeline",
@@ -103,6 +111,8 @@ const SERVICES: Service[] = [
     name: "Blended",
     title: "Blended Call Center Services",
     desc: "Our agents handle multiple communication channels simultaneously, enhancing organizational efficiency and giving your customers one seamless experience — however they choose to reach you.",
+    desc2:
+      "A blended call center means one cross-trained team working both directions — answering inbound queries in busy hours, switching to outbound follow-ups in quiet ones. The practical win is utilization: instead of paying for two half-idle desks, you staff one that's always productive. It suits businesses whose volume swings through the day or the season, and it keeps context in one place — the agent who took a customer's complaint on Monday can make the follow-up call on Wednesday, remembering the history.",
     points: [
       "Seamless inbound + outbound coverage",
       "Agents working across several channels",
@@ -122,6 +132,8 @@ const SERVICES: Service[] = [
     name: "Non-Voice",
     title: "Non-Voice Call Center Services",
     desc: "Non-voice agents skilled in writing and typing handle customer issues through email and chat — fast, accurate and always on-brand, without a single ring.",
+    desc2:
+      "Non-voice BPO covers everything customers don't phone about: email support, live chat, social media responses, back-office processing and data work. Written support has its own craft — a chat agent juggles several conversations at once, and every reply is a permanent record of your brand's tone, so we train writers, not just typists. For an e-commerce client, moving order and returns queries to chat and email cut resolution times 40% during sale events, because written queues absorb spikes far more gracefully than phone lines do.",
     points: [
       "Email support",
       "Live chat support",
@@ -291,6 +303,35 @@ const STATS = [
   { end: 21, suffix: "%", label: "Year-on-Year Growth" },
 ];
 
+/* Services FAQ — rendered visibly below AND emitted as FAQPage JSON-LD.
+   Keep the two in sync: schema must match visible content. */
+const SERVICE_FAQS: { q: string; a: string }[] = [
+  {
+    q: "What call center services does Cimmons provide?",
+    a: "Four core lines: inbound (customer support, helpdesk, order tracking, billing), outbound (telemarketing, lead qualification, appointment setting), blended teams that work both directions, and non-voice support across email, chat, social media and back-office processing. All four run from our Bengaluru operation with 24/7 coverage available.",
+  },
+  {
+    q: "What is a blended call center?",
+    a: "One cross-trained team that handles inbound calls and outbound campaigns from the same desk — answering queries during busy hours, making follow-up and sales calls in quieter ones. You get higher agent utilization than running two separate teams, and customer context stays in one place.",
+  },
+  {
+    q: "What do non-voice BPO services include?",
+    a: "Everything customers don't phone about: email support, live chat, social media responses, technical documentation, and back-office data work. Written support scales differently from voice — one agent can hold several chat conversations at once — which is why it's often the fastest way to absorb volume spikes.",
+  },
+  {
+    q: "How quickly can we go live?",
+    a: "Most engagements are live within a few business days of the consultation: we assemble the team, configure tools, run a QA cycle and start taking contacts. Complex integrations — CRM, order-management or telephony systems — can add time, and we'll tell you exactly how much before you commit.",
+  },
+  {
+    q: "How is call center outsourcing priced?",
+    a: "Per-hour, per-seat (dedicated agents) or per-contact, and most clients blend models — dedicated seats for core volume, flexible overflow for spikes. No long-term lock-in; you scale up or down as your volume changes. We'll walk you through what your first invoice would look like at your forecast volume on a 30-minute call.",
+  },
+  {
+    q: "Which industries does Cimmons support?",
+    a: "Healthcare, retail and e-commerce, technology and SaaS, financial services, and real estate — each with domain-trained agents and compliance-aware workflows. Our case studies cover real results in each: 30% higher patient satisfaction in healthcare, 40% faster order resolution in e-commerce, 45% more booked viewings in real estate.",
+  },
+];
+
 const WHY = [
   "Outsourced help-desk & inbound management",
   "Positive first impressions through trained personnel",
@@ -377,6 +418,9 @@ function ServiceRow({ s }: { s: Service }) {
           {s.title}
         </h2>
         <p className="mt-6 text-lg text-body">{s.desc}</p>
+        {s.desc2 && (
+          <p className="mt-4 text-[15px] leading-relaxed text-body">{s.desc2}</p>
+        )}
         <ul className="mt-8 space-y-4">
           {s.points.map((p) => (
             <li key={p} className="flex items-start gap-4">
@@ -403,15 +447,27 @@ function ServiceRow({ s }: { s: Service }) {
 /* ------------------------------------------------------------------ */
 
 export default function ServicesPage() {
+  const serviceSchemas = SERVICES.map((s) => ({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: s.title,
+    description: s.desc,
+    serviceType: s.title,
+    provider: { "@id": `${absUrl("/")}#organization` },
+    areaServed: "IN",
+    url: absUrl(`/services/#${s.id}`),
+  }));
+
   return (
     <>
+      <JsonLd data={[...serviceSchemas, faqSchema(SERVICE_FAQS)]} />
       <Header />
       <main className="overflow-hidden">
         {/* Page banner + breadcrumb */}
         <section className="bg-cream pb-16 pt-32 lg:pb-20 lg:pt-40">
           <div className="container-x text-center">
             <h1 className="section-title text-[36px] sm:text-[46px] lg:text-[56px]">
-              Services
+              Call Center &amp; BPO Services
             </h1>
             <nav className="mt-5 flex items-center justify-center gap-2 text-[15px] font-semibold">
               <a href="/" className="text-body transition-colors hover:text-primary">
@@ -628,6 +684,49 @@ export default function ServicesPage() {
                 Start a Conversation
                 <ArrowIcon size={18} />
               </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Services FAQ (white) — content mirrored in FAQPage JSON-LD above */}
+        <section className="bg-white py-20 lg:py-28">
+          <div className="container-x mx-auto max-w-3xl">
+            <div className="text-center">
+              <span className="eyebrow mb-6">
+                <span className="h-2 w-2 rounded-full bg-primary" />
+                Common Questions
+              </span>
+              <h2 className="section-title text-[28px] sm:text-[34px] lg:text-[40px]">
+                Call center outsourcing, answered plainly.
+              </h2>
+            </div>
+            <div className="mt-12 space-y-4">
+              {SERVICE_FAQS.map((f) => (
+                <details
+                  key={f.q}
+                  className="group rounded-2xl border border-black/10 bg-white open:bg-cream"
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-semibold text-heading [&::-webkit-details-marker]:hidden">
+                    {f.q}
+                    <span
+                      className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border border-black/15 text-body transition-transform group-open:rotate-45"
+                      aria-hidden="true"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <path
+                          d="M12 5v14M5 12h14"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </span>
+                  </summary>
+                  <p className="px-6 pb-6 text-[15px] leading-relaxed text-body">
+                    {f.a}
+                  </p>
+                </details>
+              ))}
             </div>
           </div>
         </section>

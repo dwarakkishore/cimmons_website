@@ -1,16 +1,45 @@
 import Image from "next/image";
+import { SOCIAL_LINKS } from "@/lib/site";
 
-const USEFUL = [
-  "About Us",
-  "Careers",
-  "Terms and Conditions",
-  "Privacy Policy",
+const SOCIALS: { label: string; href: string; path: string }[] = [
+  {
+    label: "X (Twitter)",
+    href: SOCIAL_LINKS.x,
+    path: "M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.3l7.3-8.3L2.5 2h6.4l4.4 5.9L18.9 2zm-1.1 18h1.7L7.9 3.7H6.1L17.8 20z",
+  },
+  {
+    label: "Facebook",
+    href: SOCIAL_LINKS.facebook,
+    path: "M14 8.5V6.8c0-.8.6-1 1-1h2.6V2h-3.5C10.9 2 10 4.4 10 5.9v2.6H7.7V12H10v10h4V12h3l.4-3.5H14z",
+  },
+  {
+    label: "LinkedIn",
+    href: SOCIAL_LINKS.linkedin,
+    path: "M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8.16h4.56V23H.22zM8.34 8.16h4.37v2.03h.06c.61-1.15 2.1-2.37 4.32-2.37 4.62 0 5.47 3.04 5.47 7v8.18h-4.55v-7.25c0-1.73-.03-3.96-2.41-3.96-2.42 0-2.79 1.89-2.79 3.83V23H8.34z",
+  },
+  {
+    label: "Instagram",
+    href: SOCIAL_LINKS.instagram,
+    path: "M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2a3.8 3.8 0 0 1-.9 1.4c-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4a3.8 3.8 0 0 1-1.4-.9 3.8 3.8 0 0 1-.9-1.4c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.1a6.7 6.7 0 1 0 0 13.4 6.7 6.7 0 0 0 0-13.4zm0 11a4.3 4.3 0 1 1 0-8.6 4.3 4.3 0 0 1 0 8.6zm8.5-11.3a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0z",
+  },
+  {
+    label: "YouTube",
+    href: SOCIAL_LINKS.youtube,
+    path: "M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12c0 2 .2 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.3-1.9.5-3.8.5-5.8s-.2-3.9-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z",
+  },
 ];
-const QUICK = [
-  "Inbound Call Center",
-  "Outbound Call Center",
-  "Blended Call Center",
-  "Non Voice Call Center",
+
+const USEFUL: { label: string; href: string }[] = [
+  { label: "About Us", href: "/about-us/" },
+  { label: "Careers", href: "/careers/" },
+  { label: "Terms and Conditions", href: "/terms/" },
+  { label: "Privacy Policy", href: "/privacy/" },
+];
+const QUICK: { label: string; href: string }[] = [
+  { label: "Inbound Call Center", href: "/services/#inbound" },
+  { label: "Outbound Call Center", href: "/services/#outbound" },
+  { label: "Blended Call Center", href: "/services/#blended" },
+  { label: "Non Voice Call Center", href: "/services/#non-voice" },
 ];
 
 export default function Footer() {
@@ -71,6 +100,26 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
+
+            {/* Social profiles */}
+            <div className="mt-7 flex flex-wrap gap-3">
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-ink/5 text-ink/70 transition-colors hover:bg-primary hover:text-white"
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d={s.path} />
+                  </svg>
+                </a>
+              ))}
+            </div>
+
+
           </div>
 
           {/* useful links */}
@@ -80,9 +129,9 @@ export default function Footer() {
             </h4>
             <ul className="mt-6 space-y-3 text-sm">
               {USEFUL.map((l) => (
-                <li key={l}>
-                  <a href="#" className="transition-colors hover:text-primary">
-                    {l}
+                <li key={l.label}>
+                  <a href={l.href} className="transition-colors hover:text-primary">
+                    {l.label}
                   </a>
                 </li>
               ))}
@@ -96,9 +145,9 @@ export default function Footer() {
             </h4>
             <ul className="mt-6 space-y-3 text-sm">
               {QUICK.map((l) => (
-                <li key={l}>
-                  <a href="#" className="transition-colors hover:text-primary">
-                    {l}
+                <li key={l.label}>
+                  <a href={l.href} className="transition-colors hover:text-primary">
+                    {l.label}
                   </a>
                 </li>
               ))}

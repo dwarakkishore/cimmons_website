@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CASE_STUDIES, getCaseStudy } from "@/lib/caseStudies";
+import JsonLd from "@/components/JsonLd";
+import { SITE_LEGAL_NAME, absUrl, breadcrumbSchema } from "@/lib/site";
 
 type Params = { slug: string };
 
@@ -14,10 +16,19 @@ export function generateStaticParams(): Params[] {
 
 export function generateMetadata({ params }: { params: Params }): Metadata {
   const cs = getCaseStudy(params.slug);
-  if (!cs) return { title: "Case Study – CIMMON" };
+  if (!cs) return { title: "Case Study" };
+  const canonical = `/case-studies/${cs.slug}/`;
   return {
-    title: `${cs.name} Case Study – CIMMON | BPO & Call Center Services`,
+    title: `${cs.name} Case Study — BPO & Call Center`,
     description: cs.tagline,
+    alternates: { canonical },
+    openGraph: {
+      type: "article",
+      title: `${cs.name} Case Study — Cimmons`,
+      description: cs.tagline,
+      url: absUrl(canonical),
+      images: [{ url: cs.img }],
+    },
   };
 }
 
@@ -45,8 +56,26 @@ export default function CaseStudyPage({ params }: { params: Params }) {
     { label: "Results", text: cs.results },
   ];
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `${cs.name} Case Study — ${cs.tagline}`,
+    description: cs.tagline,
+    image: absUrl(cs.img),
+    author: { "@type": "Organization", name: SITE_LEGAL_NAME },
+    publisher: { "@id": `${absUrl("/")}#organization` },
+    mainEntityOfPage: absUrl(`/case-studies/${cs.slug}/`),
+  };
+
+  const breadcrumbs = breadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Case Studies", path: "/#services" },
+    { name: cs.name, path: `/case-studies/${cs.slug}/` },
+  ]);
+
   return (
     <>
+      <JsonLd data={[articleSchema, breadcrumbs]} />
       <Header />
       <main className="overflow-hidden">
         {/* ---------- Hero (split: text on cream, image on the right) ---------- */}

@@ -1,33 +1,11 @@
 import Image from "next/image";
-
-const POSTS = [
-  {
-    img: "/assets/img/hf-blog1.webp",
-    tag: "Help Desk",
-    read: "1 min read",
-    date: "May 28, 2025",
-    title: "How AI is transforming customer support",
-    desc: "AI streamlines support processes with faster response times, personalized interactions and efficient issue resolution at scale.",
-  },
-  {
-    img: "/assets/img/hf-blog2.webp",
-    tag: "Customer Care",
-    read: "1 min read",
-    date: "May 28, 2025",
-    title: "How we protect your sensitive information",
-    desc: "We use advanced encryption, secure data protocols and comply with standards like GDPR and HIPAA to safeguard your data.",
-  },
-  {
-    img: "/assets/img/hf-blog3.webp",
-    tag: "IT Help Desk",
-    read: "1 min read",
-    date: "May 28, 2025",
-    title: "5 key benefits of outsourcing your customer support",
-    desc: "Outsourcing boosts efficiency, reduces costs, provides 24/7 coverage, scales quickly and ensures expert support for customers.",
-  },
-];
+import Link from "next/link";
+import { sortedPosts } from "@/lib/posts";
 
 export default function Blog() {
+  // Three most recent articles from the shared post store (lib/posts.ts).
+  const posts = sortedPosts().slice(0, 3);
+
   return (
     <section id="blog" className="bg-white py-20 lg:py-28">
       <div className="container-x">
@@ -39,9 +17,9 @@ export default function Blog() {
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {POSTS.map((p) => (
+          {posts.map((p) => (
             <article
-              key={p.title}
+              key={p.slug}
               className="group flex flex-col overflow-hidden rounded-[24px] border border-black/10 p-4 transition-shadow hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
             >
               {/* tag + read time */}
@@ -50,7 +28,7 @@ export default function Blog() {
                   {p.tag}
                 </span>
                 <span className="text-xs font-medium text-body">
-                  Read Time: {p.read}
+                  Read Time: {p.readTime}
                 </span>
               </div>
 
@@ -64,14 +42,15 @@ export default function Blog() {
               </div>
 
               <div className="flex flex-1 flex-col px-2 pt-5">
-                <span className="text-sm font-medium text-body">{p.date}</span>
+                <span className="text-sm font-medium text-body">{p.dateDisplay}</span>
                 <h3 className="mt-3 font-display text-xl font-semibold leading-snug text-heading transition-colors group-hover:text-primary">
                   {p.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-body">{p.desc}</p>
-                <a
-                  href="#"
+                <p className="mt-3 text-sm leading-relaxed text-body">{p.excerpt}</p>
+                <Link
+                  href={`/news/${p.slug}/`}
                   className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-heading transition-colors hover:text-primary"
+                  aria-label={`Read article: ${p.title}`}
                 >
                   Learn More
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -83,7 +62,7 @@ export default function Blog() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                </a>
+                </Link>
               </div>
             </article>
           ))}

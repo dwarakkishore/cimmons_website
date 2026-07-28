@@ -1,0 +1,17 @@
+# Copied into out/ by the static export and served by Apache (GoDaddy cPanel).
+
+# --- 301 redirects: old WordPress blog URLs -> new /news/ URLs ---------------
+# These four posts existed at root level on the old cimmons.in WordPress site
+# and may still be indexed / linked. Permanent redirects carry that equity to
+# the new locations. Keep these lines forever — old backlinks never expire.
+Redirect 301 /call-center-connect/ /news/call-center-connect/
+Redirect 301 /right-bpo-partner/ /news/right-bpo-partner/
+Redirect 301 /role-of-quality-assurance-in-call-center-operations/ /news/role-of-quality-assurance-in-call-center-operations/
+Redirect 301 /training-and-development-in-call-centers/ /news/training-and-development-in-call-centers/
+
+# --- 301 redirects: /industries/ renamed to /sectors/ -----------------------
+# The industries page was replaced by /sectors/ (seven lead sectors, each with
+# its own detail page). Redirect the old URL and its anchors so any indexed or
+# linked traffic lands on the new page instead of a 404.
+Redirect 301 /industries/ /sectors/
+Redirect 301 /industries /sectors/

@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useQuote } from "@/components/QuoteModal";
+import JsonLd from "@/components/JsonLd";
+import { faqSchema } from "@/lib/site";
 
 type QA = { q: string; a: string };
 
@@ -111,6 +113,9 @@ export default function Faq() {
 
   return (
     <section className="bg-white py-20 lg:py-28">
+      {/* FAQPage schema — built from the default-visible "General Questions"
+          category, which is the set present in the static HTML. */}
+      <JsonLd data={faqSchema(CATEGORIES[0].faqs.map((f) => ({ q: f.q, a: f.a })))} />
       <div className="container-x">
         <div className="relative rounded-[28px] bg-ink px-6 py-14 text-white lg:px-14">
           <h2 className="section-title text-center text-[28px] text-white sm:text-[36px] lg:text-[42px]">

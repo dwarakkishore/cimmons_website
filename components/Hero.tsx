@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import { useQuote } from "@/components/QuoteModal";
+import Counter from "@/components/Counter";
 
 const STATS = [
-  { value: "356+", label: "Employees" },
-  { value: "14+", label: "Happy Clients" },
+  { end: 356, suffix: "+", label: "Employees" },
+  { end: 14, suffix: "+", label: "Happy Clients" },
 ];
 
 export default function Hero() {
@@ -120,7 +121,7 @@ export default function Hero() {
                 className="lg:drop-shadow-[0_2px_8px_rgba(20,27,51,0.45)]"
               >
                 <div className="font-display text-2xl font-bold text-heading sm:text-3xl lg:text-5xl lg:text-white">
-                  {s.value}
+                  <Counter end={s.end} suffix={s.suffix} />
                 </div>
                 <div className="mt-1 text-[11px] font-medium uppercase leading-tight tracking-wide text-body sm:text-xs lg:text-sm lg:text-white/80">
                   {s.label}
