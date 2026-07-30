@@ -15,24 +15,17 @@ const NAV: NavItem[] = [
   { label: "Home", href: "/#home" },
   { label: "Company", href: "/about-us" },
   {
-    label: "Services",
-    href: "/services",
+    label: "Sectors",
+    href: "/sectors",
     children: [
       { label: "Inbound Call Center Services", href: "/services#inbound" },
       { label: "Outbound Call Center Services", href: "/services#outbound" },
       { label: "Blended Call Center Services", href: "/services#blended" },
       { label: "Non Voice Call Center Services", href: "/services#non-voice" },
-    ],
-  },
-  {
-    label: "Sectors",
-    href: "/sectors",
-    children: [
       ...SECTORS.map((s) => ({
         label: s.shortName,
         href: `/sectors/${s.slug}/`,
       })),
-      { label: "All Sectors", href: "/sectors" },
     ],
   },
   {

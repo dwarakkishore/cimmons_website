@@ -280,11 +280,11 @@ const SERVE_INDUSTRIES: { name: string; icon: ReactNode }[] = [
 ];
 
 const STATS = [
-  { end: 3, suffix: "+", label: "Years of Experience" },
-  { end: 14, suffix: "+", label: "Happy Clients" },
-  { end: 21, suffix: "+", label: "Projects Delivered" },
+  { end: 5, suffix: "+", label: "Years of Experience" },
+  { end: 25, suffix: "+", label: "Happy Clients" },
+  { end: 25, suffix: "+", label: "Projects Delivered" },
   { end: 356, suffix: "+", label: "Employees" },
-  { end: 21, suffix: "%", label: "Year-on-Year Growth" },
+  { end: 29, suffix: "%", label: "Year-on-Year Growth" },
 ];
 
 /* ------------------------------------------------------------------ */

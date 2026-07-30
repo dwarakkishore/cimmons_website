@@ -49,3 +49,64 @@ body {
   display: flex;
   width: max-content;
 }
+
+/* Preloader: the full-color logo fills in bottom-to-top (soft-edged mask
+   sweep) while three brand arcs draw around it. All motion sits behind
+   prefers-reduced-motion, so reduced users get a static logo for a beat. */
+@media (prefers-reduced-motion: no-preference) {
+  .preloader-mark {
+    animation: preloader-settle 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .preloader-fill {
+    /* Mask is 3x element height; sliding it from 0% to 100% sweeps the
+       black (visible) region up through the logo with a soft leading edge */
+    -webkit-mask-image: linear-gradient(to top, #000 45%, transparent 55%);
+    -webkit-mask-size: 100% 300%;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: linear-gradient(to top, #000 45%, transparent 55%);
+    mask-size: 100% 300%;
+    mask-repeat: no-repeat;
+    animation: preloader-fill 1.05s cubic-bezier(0.33, 1, 0.68, 1) 0.2s both;
+  }
+
+  .preloader-bar {
+    animation: preloader-bar 1.25s cubic-bezier(0.33, 1, 0.68, 1) both;
+  }
+}
+
+/* Reduced motion: the bar sits full, no sweep. */
+@media (prefers-reduced-motion: reduce) {
+  .preloader-bar {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes preloader-fill {
+  from {
+    -webkit-mask-position: 0% 0%;
+    mask-position: 0% 0%;
+  }
+  to {
+    -webkit-mask-position: 0% 100%;
+    mask-position: 0% 100%;
+  }
+}
+
+@keyframes preloader-bar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes preloader-settle {
+  from {
+    transform: scale(0.97);
+  }
+  to {
+    transform: scale(1);
+  }
+}

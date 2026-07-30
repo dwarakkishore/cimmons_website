@@ -2,7 +2,14 @@
   "permissions": {
     "allow": [
       "Bash(npx tsc *)",
-      "Bash(npx next *)"
+      "Bash(npx next *)",
+      "Bash(lsof -ti:3000)",
+      "Bash(git stash *)",
+      "WebFetch(domain:www.gartner.com)",
+      "WebFetch(domain:www.grandviewresearch.com)",
+      "WebFetch(domain:www.suntecindia.com)",
+      "Bash(curl -sL --max-time 30 -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/126.0 Safari/537.36\" \"https://www.gartner.com/en/newsroom/press-releases/2025-02-26-lack-of-ai-ready-data-puts-ai-projects-at-risk\" -o /private/tmp/claude-501/-Users-dwarakkishoremurugan-Documents-wpcode/33795eb0-5aa6-494e-a4e9-ff44a73266bb/scratchpad/gartner.html)",
+      "WebFetch(domain:arxiv.org)"
     ]
   }
 }

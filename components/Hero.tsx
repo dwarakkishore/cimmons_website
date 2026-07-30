@@ -6,7 +6,7 @@ import Counter from "@/components/Counter";
 
 const STATS = [
   { end: 356, suffix: "+", label: "Employees" },
-  { end: 14, suffix: "+", label: "Happy Clients" },
+  { end: 25, suffix: "+", label: "Happy Clients" },
 ];
 
 export default function Hero() {

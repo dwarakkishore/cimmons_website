@@ -56,9 +56,31 @@ export type Sector = {
   /** Icon key resolved by the sector pages (see SECTOR_ICONS). */
   icon: string;
   img: string; // hero / featured image
+  /** Hero image alt text. Falls back to a generic sector line when absent. */
+  imgAlt?: string;
   gallery: [string, string];
-  /** One-line promise — used as the meta description and hero sub-head. */
+  /** One-line promise — used as the hero sub-head, and as the meta
+   *  description unless `metaDescription` overrides it. */
   tagline: string;
+
+  /*
+   * Per-sector SEO overrides. The detail-page template frames every sector as
+   * call-center work by default ("{name} BPO & Call Center Services"), which is
+   * right for six of the seven. Set these where that framing is wrong or where
+   * the sector name alone is too thin to rank.
+   */
+  /** <title> (the layout appends "| Cimmons" — keep the total under ~60 chars). */
+  metaTitle?: string;
+  /** Meta description, 140–160 chars. Overrides `tagline`. */
+  metaDescription?: string;
+  /** Page H1, when the sector name carries no keyword. */
+  h1?: string;
+  /** schema.org Service.serviceType. Defaults to "Business Process Outsourcing". */
+  serviceType?: string;
+  /** Key for a set of sector-specific coded diagrams (components/SectorGraphics.tsx). */
+  graphics?: "ai-data";
+  /** Sector slugs shown as a related-work block when this sector has no case study. */
+  relatedSectors?: string[];
   /** Card copy on the /sectors landing page. */
   summary: string;
   // Short lines shown in the home-page accordion
@@ -88,84 +110,84 @@ export const SECTORS: Sector[] = [
   /* ---------------------------------------------------------------- 01 */
   {
     n: "01",
-    slug: "healthcare",
-    name: "Healthcare",
-    shortName: "Healthcare",
-    phrase: "healthcare",
-    icon: "heart",
-    img: "/assets/img/hf-healthcare.webp",
-    gallery: ["/assets/img/service2.webp", "/assets/img/hf-about.webp"],
+    slug: "finance",
+    name: "Finance & Banking",
+    shortName: "Finance & Banking",
+    phrase: "finance & banking",
+    icon: "bank",
+    img: "/assets/img/service3.webp",
+    gallery: ["/assets/img/service5.webp", "/assets/img/hf-about.webp"],
     tagline:
-      "Compassionate, always-on patient support that scales with demand.",
+      "Compliance-first support that protects customers and builds trust.",
     summary:
-      "Patient scheduling, insurance and billing queries, triage routing and post-visit follow-up — run by agents trained in healthcare communication and data-privacy protocol.",
+      "Account and query support, fraud-alert handling, dispute resolution and collections — every case audit-traceable, every agent working to verification protocol.",
     challenge:
-      "Managing seasonal patient volume spikes without compromising care quality or data privacy.",
+      "Balancing strict regulatory compliance with the need for fast, empathetic customer support.",
     solution:
-      "Deployed a dedicated, HIPAA-compliant 24/7 support desk for scheduling and triage.",
-    results: "Reduced patient wait times by 50% while improving satisfaction scores by 30%.",
+      "Established an audit-ready, compliance-first desk for secure query and fraud handling.",
+    results: "Achieved 100% audit traceability while drastically reducing dispute turnaround times.",
     pressures: [
-      "Seasonal surges — flu season, facility launches, insurance-renewal windows — that in-house desks cannot staff for year-round.",
-      "Clinical staff pulled off care to answer scheduling and billing calls.",
-      "Patient data that must never leave a controlled, auditable workflow.",
-      "Follow-up calls slipping through the cracks between appointments.",
+      "Every interaction carrying regulatory weight and audit exposure.",
+      "Slow dispute handling eroding trust at the worst possible moment.",
+      "Fraud signals that need specialist eyes in minutes, not hours.",
+      "Rising customer expectations against tightening compliance budgets.",
     ],
     intro: [
-      "Healthcare support is not ordinary customer service. Every call carries a person's health, their money or their privacy — often all three at once — and the tone of the conversation matters as much as the answer. That is a hard standard to hold when volumes triple overnight.",
-      "Cimmons runs the conversations around care so your clinical teams can stay focused on care itself. We build a dedicated, privacy-aware desk that handles scheduling, insurance queries, triage routing and post-visit follow-ups, with clear escalation paths back to your on-call staff whenever a case needs clinical judgement.",
+      "In financial services, support quality and compliance are the same conversation. A fast answer that skips verification is worse than no answer at all — and a slow, correct one still costs you the customer's confidence.",
+      "Cimmons builds a compliance-first desk where security and accuracy are non-negotiable and speed comes from process, not shortcuts. Agents work inside strict verification and data-handling protocols aligned to your requirements, with a full audit trail behind every case.",
     ],
     capabilities: [
       {
-        title: "Appointment Scheduling & Reminders",
-        desc: "Inbound booking, rescheduling and cancellation handling, plus proactive reminder calls that cut no-shows and keep clinic calendars full.",
+        title: "Account & Query Support",
+        desc: "Balance, transaction, statement and product questions handled after identity verification, with every action logged.",
       },
       {
-        title: "Patient Support Desk",
-        desc: "24/7 multilingual voice, chat and email support for general enquiries, pre-visit instructions and post-visit questions.",
+        title: "Fraud Alert Handling",
+        desc: "First-line review of suspicious activity with fast routing to your fraud specialists on defined triggers.",
       },
       {
-        title: "Insurance & Billing Queries",
-        desc: "Coverage checks, claim status, statement explanations and payment follow-up — handled patiently, so billing questions never sour the care experience.",
+        title: "Dispute & Chargeback Resolution",
+        desc: "A standardised, tracked process so customers always know where their case stands and turnaround stays predictable.",
       },
       {
-        title: "Triage Routing & Escalation",
-        desc: "Structured intake that identifies urgency fast and routes clinical questions to your staff within defined SLAs, never guessing at medical advice.",
+        title: "Collections Support",
+        desc: "Respectful, regulation-aware early-stage collections and payment-arrangement conversations.",
       },
       {
-        title: "Post-Visit Follow-up",
-        desc: "Recovery check-ins, adherence reminders and feedback capture that turn a single visit into continuity of care.",
+        title: "KYC & Document Follow-up",
+        desc: "Chasing, checking and recording onboarding documentation so applications do not stall in limbo.",
       },
       {
-        title: "Records & Back-Office Support",
-        desc: "Data entry, records updates and document handling inside your systems, under strict access controls and full audit trails.",
+        title: "Back-Office Processing",
+        desc: "Data entry, reconciliation support and records maintenance under four-eyes review where accuracy is critical.",
       },
     ],
     compliance: [
-      "HIPAA-aware workflows with role-based access and least-privilege data handling",
+      "Identity-verification protocol enforced before any account action",
       "ISO/IEC 27001:2013 certified information security management",
-      "Agents scripted for empathy-led communication, never clinical advice",
-      "Defined clinical escalation paths with response-time SLAs",
+      "Full audit trail on every case, retained to your policy",
+      "Call recording, QA sampling and scripted regulatory disclosures",
     ],
     stats: [
-      { value: "30%", label: "Higher patient satisfaction" },
-      { value: "50%", label: "Faster response times" },
-      { value: "24/7", label: "Multilingual coverage" },
+      { value: "↑", label: "Customer trust scores" },
+      { value: "Faster", label: "Dispute turnaround" },
+      { value: "100%", label: "Audit-traceable cases" },
     ],
     faqs: [
       {
-        q: "Do your agents give medical advice?",
-        a: "No. Our agents handle scheduling, administrative, insurance and follow-up conversations. Anything requiring clinical judgement is escalated to your on-call staff through a defined routing path with an agreed response time.",
+        q: "How do you handle regulatory compliance?",
+        a: "We build the workflow around your compliance requirements rather than the other way round — mandated disclosures are scripted, verification steps are enforced before any account action, and every case carries an audit trail. QA sampling checks adherence continuously.",
       },
       {
-        q: "How do you protect patient data?",
-        a: "We work inside HIPAA-aware workflows with role-based access, least-privilege permissions and full audit trails, backed by our ISO/IEC 27001:2013 certified information security management system. Agents access only the fields their task requires.",
+        q: "Can you handle fraud alerts?",
+        a: "We handle first-line review and containment conversations, and route to your fraud specialists on agreed triggers within a defined window. Investigative decisions stay with your team.",
       },
       {
-        q: "Can you scale up for seasonal surges?",
-        a: "Yes. Flexing seasonal capacity is the core reason healthcare providers bring us in. We add trained capacity within days for flu season, facility launches or renewal windows, and scale back down afterwards so you are not carrying peak cost year-round.",
+        q: "Where is the work delivered from?",
+        a: "Our operations are based in Bengaluru, India, serving clients in India and globally. Where a mandate requires specific data-residency or on-shore handling, we scope that with you before go-live.",
       },
     ],
-    caseStudy: "healthcare",
+    caseStudy: "finance",
   },
 
   /* ---------------------------------------------------------------- 02 */
@@ -338,89 +360,271 @@ export const SECTORS: Sector[] = [
   /* ---------------------------------------------------------------- 04 */
   {
     n: "04",
-    slug: "finance",
-    name: "Finance & Banking",
-    shortName: "Finance & Banking",
-    phrase: "finance & banking",
-    icon: "bank",
-    img: "/assets/img/service3.webp",
-    gallery: ["/assets/img/service5.webp", "/assets/img/hf-about.webp"],
+    slug: "it-saas",
+    name: "IT & SaaS",
+    shortName: "IT & SaaS",
+    phrase: "IT & SaaS",
+    icon: "cloud",
+    img: "/assets/img/technology2.webp",
+    gallery: ["/assets/img/technology1.webp", "/assets/img/success.webp"],
     tagline:
-      "Compliance-first support that protects customers and builds trust.",
+      "Global, always-on omnichannel support that keeps users subscribed.",
     summary:
-      "Account and query support, fraud-alert handling, dispute resolution and collections — every case audit-traceable, every agent working to verification protocol.",
-    challenge:
-      "Balancing strict regulatory compliance with the need for fast, empathetic customer support.",
+      "Follow-the-sun omnichannel coverage with defined SLAs, retention support and a single shared knowledge base across every region.",
+    challenge: "Global users experienced delayed resolutions due to limited time zone support coverage.",
     solution:
-      "Established an audit-ready, compliance-first desk for secure query and fraud handling.",
-    results: "Achieved 100% audit traceability while drastically reducing dispute turnaround times.",
+      "Deployed a follow-the-sun 24/7 support model with stringent SLA management.",
+    results:
+      "Eliminated overnight wait times, directly contributing to higher customer retention.",
     pressures: [
-      "Every interaction carrying regulatory weight and audit exposure.",
-      "Slow dispute handling eroding trust at the worst possible moment.",
-      "Fraud signals that need specialist eyes in minutes, not hours.",
-      "Rising customer expectations against tightening compliance budgets.",
+      "Customers in every time zone, support in only one.",
+      "Overnight waits showing up later as churn.",
+      "Answers that differ depending on which region picks up the ticket.",
+      "SLA commitments made in sales that operations cannot hold.",
     ],
     intro: [
-      "In financial services, support quality and compliance are the same conversation. A fast answer that skips verification is worse than no answer at all — and a slow, correct one still costs you the customer's confidence.",
-      "Cimmons builds a compliance-first desk where security and accuracy are non-negotiable and speed comes from process, not shortcuts. Agents work inside strict verification and data-handling protocols aligned to your requirements, with a full audit trail behind every case.",
+      "For subscription businesses, support is retention. A user who hits a wall at 3am and waits until the next business day has already started forming an opinion about renewal — and no amount of product quality fully undoes that.",
+      "Cimmons closes the coverage gap with a genuinely 24/7 operation: the same quality of help whatever the hour or channel, working from one shared knowledge base so a customer gets the same answer in Bengaluru, Berlin or Boston.",
     ],
     capabilities: [
       {
-        title: "Account & Query Support",
-        desc: "Balance, transaction, statement and product questions handled after identity verification, with every action logged.",
+        title: "Omnichannel Support",
+        desc: "Chat, email, voice and in-app support handled by cross-trained agents working from one knowledge base.",
       },
       {
-        title: "Fraud Alert Handling",
-        desc: "First-line review of suspicious activity with fast routing to your fraud specialists on defined triggers.",
+        title: "24/7 Follow-the-Sun Coverage",
+        desc: "Genuine round-the-clock staffing so response and resolution targets hold at 3am as firmly as at 3pm.",
       },
       {
-        title: "Dispute & Chargeback Resolution",
-        desc: "A standardised, tracked process so customers always know where their case stands and turnaround stays predictable.",
+        title: "SLA Management",
+        desc: "First-response and resolution targets defined, monitored and reported — the commitments sales makes, kept.",
       },
       {
-        title: "Collections Support",
-        desc: "Respectful, regulation-aware early-stage collections and payment-arrangement conversations.",
+        title: "Retention & Churn-Save Support",
+        desc: "Cancellation conversations handled with genuine problem-solving and offers you approve, not pressure tactics.",
       },
       {
-        title: "KYC & Document Follow-up",
-        desc: "Chasing, checking and recording onboarding documentation so applications do not stall in limbo.",
+        title: "User Onboarding & Adoption",
+        desc: "Guided activation and proactive check-ins that get new accounts to value before the trial runs out.",
       },
       {
-        title: "Back-Office Processing",
-        desc: "Data entry, reconciliation support and records maintenance under four-eyes review where accuracy is critical.",
+        title: "Billing & Subscription Queries",
+        desc: "Plan changes, invoices, seat management and payment issues resolved without an engineering ticket.",
       },
     ],
     compliance: [
-      "Identity-verification protocol enforced before any account action",
-      "ISO/IEC 27001:2013 certified information security management",
-      "Full audit trail on every case, retained to your policy",
-      "Call recording, QA sampling and scripted regulatory disclosures",
+      "One shared knowledge base — consistent answers in every region",
+      "Documented SLAs with weekly attainment reporting",
+      "ISO/IEC 27001:2013 controls on customer-data access",
+      "Quality sampling across every channel and every shift",
     ],
     stats: [
-      { value: "↑", label: "Customer trust scores" },
-      { value: "Faster", label: "Dispute turnaround" },
-      { value: "100%", label: "Audit-traceable cases" },
+      { value: "24/7", label: "Follow-the-sun coverage" },
+      { value: "↑", label: "Customer retention" },
+      { value: "SLA", label: "Backed response times" },
     ],
     faqs: [
       {
-        q: "How do you handle regulatory compliance?",
-        a: "We build the workflow around your compliance requirements rather than the other way round — mandated disclosures are scripted, verification steps are enforced before any account action, and every case carries an audit trail. QA sampling checks adherence continuously.",
+        q: "Is your 24/7 coverage genuinely staffed?",
+        a: "Yes — overnight shifts are staffed by trained agents, not a voicemail box or a bot that files a ticket for the morning. SLA attainment is reported per shift so you can see it holding.",
       },
       {
-        q: "Can you handle fraud alerts?",
-        a: "We handle first-line review and containment conversations, and route to your fraud specialists on agreed triggers within a defined window. Investigative decisions stay with your team.",
+        q: "How do you keep answers consistent across regions?",
+        a: "Every agent works from one shared knowledge base with a single approved answer per scenario, and quality sampling runs across all shifts. When an answer changes, it changes everywhere at once.",
       },
       {
-        q: "Where is the work delivered from?",
-        a: "Our operations are based in Bengaluru, India, serving clients in India and globally. Where a mandate requires specific data-residency or on-shore handling, we scope that with you before go-live.",
+        q: "Can you handle cancellation and churn-save conversations?",
+        a: "We can, within limits you set. Our approach is to solve the underlying problem and present retention offers you have approved — never to make cancelling difficult.",
       },
     ],
-    caseStudy: "finance",
+    caseStudy: "it-saas",
   },
 
   /* ---------------------------------------------------------------- 05 */
   {
     n: "05",
+    slug: "ai-data-services",
+    name: "AI Data Services",
+    shortName: "AI Data Services",
+    phrase: "AI data services",
+    icon: "sparkle",
+    img: "/assets/img/data-annotation-services-bengaluru-team.webp",
+    imgAlt:
+      "Cimmons data annotation reviewers checking labeled training data at the Bengaluru operations centre",
+    gallery: [
+      "/assets/img/multilingual-voice-data-collection-india.webp",
+      "/assets/img/technology1.webp",
+    ],
+    // This sector sells data work, not call-center work, so it overrides the
+    // template's generic BPO framing. Primary keyword: "data annotation
+    // services in bangalore" (local + commercial, per SEO_CONTEXT.md §1b).
+    metaTitle: "Data Annotation Services in Bangalore",
+    metaDescription:
+      "Data annotation, AI training data and human-in-the-loop review from Bengaluru — text, image, video and audio, labeled by trained CX teams under ISO controls.",
+    h1: "Data Annotation & AI Training Data Services",
+    serviceType: "Data Annotation and AI Training Data Services",
+    graphics: "ai-data",
+    // No case study exists for this sector yet, so the template shows these
+    // instead of the case-study proof block.
+    relatedSectors: ["it-saas", "technology"],
+    tagline:
+      "Human-in-the-loop data work that makes AI models worth deploying.",
+    summary:
+      "Data annotation and labeling across image, video, text and audio, plus multilingual data collection, model evaluation, RLHF review and QA — run by trained, managed teams in Bengaluru.",
+    challenge:
+      "Annotation that was accurate in the pilot fell apart at volume — and model performance stalled with it.",
+    solution:
+      "Managed human-in-the-loop teams working to versioned guidelines, with every label traceable to a rule.",
+    results:
+      "Auditable training datasets that hold their accuracy as throughput goes up.",
+    pressures: [
+      "Models that pass every offline benchmark and then break on real-world inputs the training set never contained.",
+      "Annotation volume tripling in a quarter while label consistency quietly drifts.",
+      "No independent human review layer, so bias and unsafe outputs reach production before anyone catches them.",
+      "Regional language and dialect data that simply doesn't exist in any dataset you can buy.",
+    ],
+    intro: [
+      "A model is only as good as the judgement in its training data. That's the part vendors gloss over: labeling isn't data entry. Deciding whether a frustrated customer's \"fine, whatever\" is resolved or escalated-and-lost is a judgement call, and someone who has never handled that call will get it wrong at scale.",
+      "Cimmons came to AI data work from the other direction. We run live support floors — 356+ people on voice and non-voice operations in Bengaluru for 25+ clients — so the people annotating your conversational data have taken those conversations. For intent taxonomies, support-dialogue RLHF, sentiment and escalation labeling, that experience is the product. Pure-play annotation shops staff for throughput; we staff for judgement and then build throughput on top.",
+      "The rest is the full pipeline you'd expect. We generate raw multilingual voice and image-prompted speech data where none exists, label text, image, video and audio to versioned guidelines, and sit as an independent human-in-the-loop layer scoring model output before it ships. All of it inside ISO 9001:2015 and ISMS 27001:2013 controls, in access-controlled environments your data doesn't leave.",
+    ],
+    capabilities: [
+      {
+        title: "Multilingual data collection",
+        desc: "Raw training data built from scratch: natural conversational voice, image-prompted speech and simulated support scenarios, across the demographics and Indian languages your users actually speak.",
+      },
+      {
+        title: "Text & NLP annotation",
+        desc: "Named entity recognition, intent classification, sentiment and emotion tagging, document categorisation and instruction-response pairs for LLM fine-tuning.",
+      },
+      {
+        title: "Image & video annotation",
+        desc: "Bounding boxes, polygon and semantic segmentation, keypoint and skeletal labeling, and frame-by-frame video tracking for computer vision and autonomous systems.",
+      },
+      {
+        title: "Audio & speech annotation",
+        desc: "Verbatim and clean transcription, speaker diarization, timestamping, accent and emotion tagging for ASR and voice AI.",
+      },
+      {
+        title: "Human-in-the-loop QA",
+        desc: "A double-pass review layer with adjudication on disagreement. We measure inter-annotator agreement and report it, so you see label quality as a number rather than a promise.",
+      },
+      {
+        title: "Safety & compliance filtering",
+        desc: "Screening training corpora for biased, abusive, personal or otherwise unusable content before it shapes model behaviour — and documenting what we removed and why.",
+      },
+    ],
+    groupedCapabilities: [
+      {
+        title: "Sourcing data that doesn't exist yet",
+        desc: "Buying a dataset only works if someone has already built one. When they haven't — regional dialects, your specific support scenarios, edge cases your users hit and your logs missed — we record it. Consented collection, documented demographic spread, delivered to your spec.",
+        subFeatures: [
+          "Conversational & dialect voice recording",
+          "Image-prompted speech & scenario capture",
+          "Support-conversation simulation",
+        ],
+      },
+      {
+        title: "Labeling across every modality you train on",
+        desc: "Text, image, video, audio — one vendor, one set of guidelines, one QA standard. Annotators train against golden datasets before they touch production data, and every label decision traces back to a written rule rather than a judgement call someone made on a Tuesday.",
+        subFeatures: [
+          "NER, intent & sentiment classification",
+          "Bounding box, polygon & keypoint labeling",
+          "Transcription, diarization & emotion tagging",
+        ],
+      },
+      {
+        title: "Independent human review of model output",
+        desc: "The checkpoint between \"the model responded\" and \"we shipped that response\". We score outputs against your guidelines, flag toxicity and bias, and feed structured preference data back into training. Being outside your team is the point — we have no reason to grade generously.",
+        subFeatures: [
+          "Output accuracy & preference scoring",
+          "RLHF & reinforcement feedback",
+          "Toxicity, bias & brand-safety audit",
+        ],
+      },
+    ],
+    startingPoints: [
+      {
+        problem: "Your model needs scenarios your logs never captured.",
+        solution: "We record them.",
+      },
+      {
+        problem: "You have a data lake nobody has structured.",
+        solution: "We label it.",
+      },
+      {
+        problem: "Your pipeline needs review by someone who didn't build it.",
+        solution: "We audit it.",
+      },
+      {
+        problem: "Your data-ops team is the bottleneck, not the plan.",
+        solution: "We extend it.",
+      },
+    ],
+    engagementModels: [
+      {
+        title: "Fixed-scope delivery",
+        desc: "A defined target — 50,000 labeled images, 200 hours of transcribed audio — with an agreed accuracy threshold and delivery date. Best when the work is bounded and you want a number on it.",
+      },
+      {
+        title: "Dedicated AI ops team",
+        desc: "A ring-fenced team that works inside your tooling and your guidelines, on your sprint rhythm, scaling up as volume grows. Best when annotation is continuous rather than a project.",
+      },
+      {
+        title: "Independent QA layer",
+        desc: "You generate or auto-label; we grade. We score, filter and adjudicate before anything enters training. Best when speed comes from automation and the risk you're managing is quality.",
+      },
+    ],
+    compliance: [
+      "Double-pass human review with documented adjudication — inter-annotator agreement measured and reported, not assumed",
+      "Consent-based collection with documented demographic, language and dialect coverage",
+      "ISO 9001:2015 quality management and ISMS 27001:2013 information security, with access-controlled delivery environments",
+      "Versioned annotation guidelines — every label traces to a written rule, so relabeling on a spec change is a re-run, not a rebuild",
+    ],
+    stats: [
+      { value: "356+", label: "People across our Bengaluru operations" },
+      { value: "4", label: "Modalities: text, image, video, audio" },
+      { value: "2-pass", label: "Human review on every dataset" },
+    ],
+    faqs: [
+      {
+        q: "What types of data can you annotate?",
+        a: "Text, image, video and audio. Bounding boxes, polygon and semantic segmentation and keypoints for computer vision; NER, intent and sentiment for NLP; transcription, diarization and emotion tagging for speech. If your task doesn't fit a standard type, we'll write guidelines for it.",
+      },
+      {
+        q: "How do you make sure the labels are accurate?",
+        a: "Process, not promises. Annotators train against a golden dataset before touching production data, every batch goes through a second independent pass, and disagreements are adjudicated against versioned written guidelines. We measure inter-annotator agreement and report it with delivery.",
+      },
+      {
+        q: "What makes you different from a dedicated annotation company?",
+        a: "We run live support operations — 356+ people on voice and non-voice floors. For conversational AI, intent taxonomies, sentiment and RLHF on support dialogue, our annotators have handled the real version of the conversation they're labeling. For pure computer-vision work, honestly, judge us on the QA process rather than that background.",
+      },
+      {
+        q: "Can you collect training data we don't have?",
+        a: "Yes. Consented multilingual voice recording, image-prompted speech, and simulated support scenarios, with documented demographic and dialect spread. This is where teams building for Indian users usually get stuck, and it's the work we're best set up for.",
+      },
+      {
+        q: "How do you price data annotation work?",
+        a: "Three ways: per unit (per image, per audio hour, per document) for fixed-scope work; per FTE per month for a dedicated team; or per reviewed item for QA-only engagements. Which one is cheaper depends on how stable your guidelines are — if the spec is still moving, a dedicated team costs less than repricing a fixed scope every fortnight.",
+      },
+      {
+        q: "How quickly can you scale up?",
+        a: "We recruit and train against a defined guideline, so ramp time is a function of task complexity, not hiring. Simple classification scales in days; specialist medical or dialect work takes longer because the training does. We'll give you a ramp curve before you sign, not after.",
+      },
+      {
+        q: "Who owns the data and the labels?",
+        a: "You do — the source data, the annotations and any derived dataset. We work in access-controlled environments under ISMS 27001:2013, your data doesn't leave the agreed ecosystem, and we don't reuse client data across engagements.",
+      },
+      {
+        q: "Do you work in our annotation tool?",
+        a: "Yes, that's the default — your platform, your guidelines, your project structure, so your review workflow stays intact. If you don't have tooling yet, we'll run the project in ours and hand over clean, versioned exports.",
+      },
+    ],
+  },
+
+  /* ---------------------------------------------------------------- 06 */
+  {
+    n: "06",
     slug: "real-estate",
     name: "Real Estate",
     shortName: "Real Estate",
@@ -504,223 +708,87 @@ export const SECTORS: Sector[] = [
     caseStudy: "real-estate",
   },
 
-  /* ---------------------------------------------------------------- 06 */
-  {
-    n: "06",
-    slug: "it-saas",
-    name: "IT & SaaS",
-    shortName: "IT & SaaS",
-    phrase: "IT & SaaS",
-    icon: "cloud",
-    img: "/assets/img/technology2.webp",
-    gallery: ["/assets/img/technology1.webp", "/assets/img/success.webp"],
-    tagline:
-      "Global, always-on omnichannel support that keeps users subscribed.",
-    summary:
-      "Follow-the-sun omnichannel coverage with defined SLAs, retention support and a single shared knowledge base across every region.",
-    challenge: "Global users experienced delayed resolutions due to limited time zone support coverage.",
-    solution:
-      "Deployed a follow-the-sun 24/7 support model with stringent SLA management.",
-    results:
-      "Eliminated overnight wait times, directly contributing to higher customer retention.",
-    pressures: [
-      "Customers in every time zone, support in only one.",
-      "Overnight waits showing up later as churn.",
-      "Answers that differ depending on which region picks up the ticket.",
-      "SLA commitments made in sales that operations cannot hold.",
-    ],
-    intro: [
-      "For subscription businesses, support is retention. A user who hits a wall at 3am and waits until the next business day has already started forming an opinion about renewal — and no amount of product quality fully undoes that.",
-      "Cimmons closes the coverage gap with a genuinely 24/7 operation: the same quality of help whatever the hour or channel, working from one shared knowledge base so a customer gets the same answer in Bengaluru, Berlin or Boston.",
-    ],
-    capabilities: [
-      {
-        title: "Omnichannel Support",
-        desc: "Chat, email, voice and in-app support handled by cross-trained agents working from one knowledge base.",
-      },
-      {
-        title: "24/7 Follow-the-Sun Coverage",
-        desc: "Genuine round-the-clock staffing so response and resolution targets hold at 3am as firmly as at 3pm.",
-      },
-      {
-        title: "SLA Management",
-        desc: "First-response and resolution targets defined, monitored and reported — the commitments sales makes, kept.",
-      },
-      {
-        title: "Retention & Churn-Save Support",
-        desc: "Cancellation conversations handled with genuine problem-solving and offers you approve, not pressure tactics.",
-      },
-      {
-        title: "User Onboarding & Adoption",
-        desc: "Guided activation and proactive check-ins that get new accounts to value before the trial runs out.",
-      },
-      {
-        title: "Billing & Subscription Queries",
-        desc: "Plan changes, invoices, seat management and payment issues resolved without an engineering ticket.",
-      },
-    ],
-    compliance: [
-      "One shared knowledge base — consistent answers in every region",
-      "Documented SLAs with weekly attainment reporting",
-      "ISO/IEC 27001:2013 controls on customer-data access",
-      "Quality sampling across every channel and every shift",
-    ],
-    stats: [
-      { value: "24/7", label: "Follow-the-sun coverage" },
-      { value: "↑", label: "Customer retention" },
-      { value: "SLA", label: "Backed response times" },
-    ],
-    faqs: [
-      {
-        q: "Is your 24/7 coverage genuinely staffed?",
-        a: "Yes — overnight shifts are staffed by trained agents, not a voicemail box or a bot that files a ticket for the morning. SLA attainment is reported per shift so you can see it holding.",
-      },
-      {
-        q: "How do you keep answers consistent across regions?",
-        a: "Every agent works from one shared knowledge base with a single approved answer per scenario, and quality sampling runs across all shifts. When an answer changes, it changes everywhere at once.",
-      },
-      {
-        q: "Can you handle cancellation and churn-save conversations?",
-        a: "We can, within limits you set. Our approach is to solve the underlying problem and present retention offers you have approved — never to make cancelling difficult.",
-      },
-    ],
-    caseStudy: "it-saas",
-  },
-
   /* ---------------------------------------------------------------- 07 */
   {
     n: "07",
-    slug: "ai-data-services",
-    name: "AI Data Services",
-    shortName: "AI Data Services",
-    phrase: "AI data services",
-    icon: "sparkle",
-    img: "/assets/img/service5.webp",
-    gallery: ["/assets/img/technology1.webp", "/assets/img/hf-about.webp"],
+    slug: "healthcare",
+    name: "Healthcare",
+    shortName: "Healthcare",
+    phrase: "healthcare",
+    icon: "heart",
+    img: "/assets/img/hf-healthcare.webp",
+    gallery: ["/assets/img/service2.webp", "/assets/img/hf-about.webp"],
     tagline:
-      "Human-in-the-loop data work that makes AI models worth deploying.",
+      "Compassionate, always-on patient support that scales with demand.",
     summary:
-      "Data annotation and labelling across image, video, text and audio, plus data collection, model evaluation, RLHF review and QA — delivered by trained, managed teams.",
+      "Patient scheduling, insurance and billing queries, triage routing and post-visit follow-up — run by agents trained in healthcare communication and data-privacy protocol.",
     challenge:
-      "Inconsistent, unscalable data labeling was severely bottlenecking AI model performance.",
+      "Managing seasonal patient volume spikes without compromising care quality or data privacy.",
     solution:
-      "Provided managed, human-in-the-loop annotation teams driven by strict QA protocols.",
-    results:
-      "Delivered highly accurate, auditable training datasets that scaled seamlessly with model needs.",
+      "Deployed a dedicated, HIPAA-compliant 24/7 support desk for scheduling and triage.",
+    results: "Reduced patient wait times by 50% while improving satisfaction scores by 30%.",
     pressures: [
-      "AI models underperforming in real-world scenarios due to clean but incomplete training data.",
-      "Scaling data annotation rapidly without compromising on label accuracy or consistency.",
-      "Lack of structured, human-in-the-loop validation leading to biased or unsafe model outputs.",
-      "Struggling to capture authentic, regional language nuances for voice and conversational AI.",
+      "Seasonal surges — flu season, facility launches, insurance-renewal windows — that in-house desks cannot staff for year-round.",
+      "Clinical staff pulled off care to answer scheduling and billing calls.",
+      "Patient data that must never leave a controlled, auditable workflow.",
+      "Follow-up calls slipping through the cracks between appointments.",
     ],
     intro: [
-      "An AI model is only as intelligent as the data it learns from. Building high-quality training datasets isn't just a technology challenge—it's a massive human operations challenge. It requires teams who can generate realistic scenarios, label content with pinpoint accuracy, and rigorously review outputs without compromise.",
-      "At Cimmons, we provide an end-to-end AI Data pipeline. From generating raw multilingual voice data and meticulously annotating text, images, and audio, to providing a strict human-in-the-loop quality assurance layer. We ensure the data feeding your models is clean, diverse, and ready for deployment.",
+      "Healthcare support is not ordinary customer service. Every call carries a person's health, their money or their privacy — often all three at once — and the tone of the conversation matters as much as the answer. That is a hard standard to hold when volumes triple overnight.",
+      "Cimmons runs the conversations around care so your clinical teams can stay focused on care itself. We build a dedicated, privacy-aware desk that handles scheduling, insurance queries, triage routing and post-visit follow-ups, with clear escalation paths back to your on-call staff whenever a case needs clinical judgement.",
     ],
     capabilities: [
       {
-        title: "Multilingual Data Collection",
-        desc: "Generating raw training data from scratch—including natural conversational voice, image-prompted speech, and sales simulations across diverse demographics and languages.",
+        title: "Appointment Scheduling & Reminders",
+        desc: "Inbound booking, rescheduling and cancellation handling, plus proactive reminder calls that cut no-shows and keep clinic calendars full.",
       },
       {
-        title: "Text & NLP Annotation",
-        desc: "Structuring text data through named entity recognition (NER), intent classification, sentiment tagging, and document categorization for LLM training.",
+        title: "Patient Support Desk",
+        desc: "24/7 multilingual voice, chat and email support for general enquiries, pre-visit instructions and post-visit questions.",
       },
       {
-        title: "Image & Video Annotation",
-        desc: "Precise bounding boxes, polygon segmentation, and keypoint labeling to train robust computer vision and autonomous systems.",
+        title: "Insurance & Billing Queries",
+        desc: "Coverage checks, claim status, statement explanations and payment follow-up — handled patiently, so billing questions never sour the care experience.",
       },
       {
-        title: "Audio & Speech Transcription",
-        desc: "Accurate transcription, speaker diarization, and emotion tagging for speech recognition and voice AI models.",
+        title: "Triage Routing & Escalation",
+        desc: "Structured intake that identifies urgency fast and routes clinical questions to your staff within defined SLAs, never guessing at medical advice.",
       },
       {
-        title: "Human-in-the-loop Quality Assurance",
-        desc: "A rigorous, multi-pass review layer checking your datasets for accuracy, consistency, and edge-case handling before they enter training pipelines.",
+        title: "Post-Visit Follow-up",
+        desc: "Recovery check-ins, adherence reminders and feedback capture that turn a single visit into continuity of care.",
       },
       {
-        title: "Dataset Safety & Compliance Filtering",
-        desc: "Proactively identifying and removing biased, abusive, or inappropriate content to protect downstream model behavior and brand safety.",
-      },
-    ],
-    groupedCapabilities: [
-      {
-        title: "Sourcing & Synthesizing Raw Data",
-        desc: "We build bespoke datasets from the ground up, utilizing a diverse global workforce. Whether it's capturing authentic regional dialects or simulating complex support scenarios, we ensure your model trains on reality.",
-        subFeatures: [
-          "Conversational & dialect voice recording",
-          "Visual scenario generation",
-          "Synthetic data augmentation",
-        ],
-      },
-      {
-        title: "Comprehensive Multi-Modal Labeling",
-        desc: "We bring structure to chaos. Our teams meticulously tag, box, and categorize raw text, audio, and visual data, transforming unstructured files into high-fidelity training assets.",
-        subFeatures: [
-          "NLP & sentiment classification",
-          "Polygon & keypoint bounding",
-          "Audio-to-text diarization",
-        ],
-      },
-      {
-        title: "Independent Human-in-the-Loop Validation",
-        desc: "We serve as the critical final checkpoint for your AI outputs. By auditing model responses against strict guidelines, we ensure safety, accuracy, and alignment before deployment.",
-        subFeatures: [
-          "Output accuracy scoring",
-          "Reinforcement learning feedback",
-          "Toxicity & bias auditing",
-        ],
-      },
-    ],
-    startingPoints: [
-      { problem: "Your model needs highly specific scenarios to learn from, but you lack the raw inputs.", solution: "We source it." },
-      { problem: "You have massive, unorganized data lakes requiring precise, large-scale categorization.", solution: "We structure it." },
-      { problem: "Your training pipelines require independent, third-party auditing for edge cases and brand safety.", solution: "We audit it." },
-      { problem: "Your internal data ops team is bottlenecked by rapidly increasing annotation demands.", solution: "We augment them." },
-    ],
-    engagementModels: [
-      {
-        title: "Fixed-Scope Delivery",
-        desc: "Perfect for defined milestones. You provide the targets (e.g., 50,000 labeled images or 200 hours of audio), and we manage the end-to-end execution and delivery.",
-      },
-      {
-        title: "Dedicated AI Ops Team",
-        desc: "A continuous partnership where we deploy a ring-fenced team of experts that integrates directly into your daily AI workflows, scaling dynamically with your needs.",
-      },
-      {
-        title: "Independent QA Layer",
-        desc: "You handle the automated generation; we act purely as the human oversight committee, aggressively filtering and scoring data to prevent model drift.",
+        title: "Records & Back-Office Support",
+        desc: "Data entry, records updates and document handling inside your systems, under strict access controls and full audit trails.",
       },
     ],
     compliance: [
-      "100% human-in-the-loop review teams operating under strict QA protocols",
-      "Consent-based data collection with comprehensive demographic and dialect diversity",
-      "Secure, access-controlled delivery environments with ISO-certified data handling",
-      "Versioned annotation guidelines ensuring every label decision is traceable to a rule",
+      "HIPAA-aware workflows with role-based access and least-privilege data handling",
+      "ISO/IEC 27001:2013 certified information security management",
+      "Agents scripted for empathy-led communication, never clinical advice",
+      "Defined clinical escalation paths with response-time SLAs",
     ],
     stats: [
-      { value: "100%", label: "Human-in-the-loop QA" },
-      { value: "Multi-Modal", label: "Text, Audio, Image & Video" },
-      { value: "Scalable", label: "Elastic annotation teams" },
+      { value: "30%", label: "Higher patient satisfaction" },
+      { value: "50%", label: "Faster response times" },
+      { value: "24/7", label: "Multilingual coverage" },
     ],
     faqs: [
       {
-        q: "What types of AI data can you annotate?",
-        a: "We handle text, image, video, and audio. This includes everything from bounding boxes and segmentation for computer vision, to intent classification for NLP, and transcription for speech AI.",
+        q: "Do your agents give medical advice?",
+        a: "No. Our agents handle scheduling, administrative, insurance and follow-up conversations. Anything requiring clinical judgement is escalated to your on-call staff through a defined routing path with an agreed response time.",
       },
       {
-        q: "How do you ensure data labeling quality?",
-        a: "Quality is driven by process. We use documented, versioned guidelines, train annotators against golden datasets, and enforce a rigorous double-pass human review. Disagreements are systematically adjudicated to maintain consistency.",
+        q: "How do you protect patient data?",
+        a: "We work inside HIPAA-aware workflows with role-based access, least-privilege permissions and full audit trails, backed by our ISO/IEC 27001:2013 certified information security management system. Agents access only the fields their task requires.",
       },
       {
-        q: "Can you generate new training data from scratch?",
-        a: "Absolutely. If you lack the raw data, we can generate it through consented, multilingual voice collection, image-prompted speech recordings, and simulated conversational scenarios.",
-      },
-      {
-        q: "How secure is my proprietary training data?",
-        a: "Highly secure. We operate within access-controlled environments under strict information security frameworks (ISO 27001 compliant). Your data never leaves the agreed-upon secure ecosystem.",
+        q: "Can you scale up for seasonal surges?",
+        a: "Yes. Flexing seasonal capacity is the core reason healthcare providers bring us in. We add trained capacity within days for flu season, facility launches or renewal windows, and scale back down afterwards so you are not carrying peak cost year-round.",
       },
     ],
+    caseStudy: "healthcare",
   },
 ];
 

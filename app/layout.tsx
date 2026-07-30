@@ -3,6 +3,7 @@ import { Manrope, Sora } from "next/font/google";
 import "./globals.css";
 import { QuoteProvider } from "@/components/QuoteModal";
 import JsonLd from "@/components/JsonLd";
+import Preloader from "@/components/Preloader";
 import {
   SITE_URL,
   SITE_NAME,
@@ -79,6 +80,7 @@ export default function RootLayout({
     <html lang="en" className={`${manrope.variable} ${sora.variable}`}>
       <body className="bg-white font-sans text-body antialiased">
         <JsonLd data={organizationSchema} />
+        <Preloader />
         <QuoteProvider>{children}</QuoteProvider>
       </body>
     </html>
