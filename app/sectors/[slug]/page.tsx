@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import SectorIcon from "@/components/SectorIcon";
 import Reveal from "@/components/Reveal";
+import { AiDataModalityMatrix, AiDataPipeline, AiDataQaFlow } from "@/components/SectorGraphics";
 import { SECTORS, getSector } from "@/lib/sectors";
 import { getCaseStudy } from "@/lib/caseStudies";
 import {
@@ -26,14 +27,16 @@ export function generateMetadata({ params }: { params: Params }): Metadata {
   const sector = getSector(params.slug);
   if (!sector) return { title: "Sector" };
   const canonical = `/sectors/${sector.slug}/`;
+  const title = sector.metaTitle ?? `${sector.name} BPO & Call Center Services`;
+  const description = sector.metaDescription ?? sector.tagline;
   return {
-    title: `${sector.name} BPO & Call Center Services`,
-    description: sector.tagline,
+    title,
+    description,
     alternates: { canonical },
     openGraph: {
       type: "website",
-      title: `${sector.name} BPO Services — Cimmons`,
-      description: sector.tagline,
+      title: `${title} — Cimmons`,
+      description,
       url: absUrl(canonical),
       images: [{ url: sector.img }],
     },
@@ -76,13 +79,19 @@ export default function SectorPage({ params }: { params: Params }) {
 
   const others = SECTORS.filter((s) => s.slug !== sector.slug).slice(0, 3);
   const caseStudy = sector.caseStudy ? getCaseStudy(sector.caseStudy) : undefined;
+  const related = sector.relatedSectors
+    ?.map((slug) => getSector(slug))
+    .filter((s): s is NonNullable<typeof s> => Boolean(s));
+
+  const metaTitle = sector.metaTitle ?? `${sector.name} BPO & Call Center Services`;
+  const h1 = sector.h1 ?? sector.name;
 
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: `${sector.name} BPO & Call Center Services`,
-    description: sector.tagline,
-    serviceType: "Business Process Outsourcing",
+    name: metaTitle,
+    description: sector.metaDescription ?? sector.tagline,
+    serviceType: sector.serviceType ?? "Business Process Outsourcing",
     provider: { "@id": `${absUrl("/")}#organization` },
     areaServed: ["IN", "Worldwide"],
     url: absUrl(`/sectors/${sector.slug}/`),
@@ -134,7 +143,7 @@ export default function SectorPage({ params }: { params: Params }) {
 
 
                 <h1 className="mt-6 font-display text-[42px] font-extrabold leading-[1.08] tracking-tight sm:text-[54px] lg:text-[68px]">
-                  {sector.name}
+                  {h1}
                 </h1>
                 
                 <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/70 sm:text-xl">
@@ -162,7 +171,7 @@ export default function SectorPage({ params }: { params: Params }) {
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[24px] shadow-2xl lg:aspect-[1/1] xl:aspect-[4/3] border border-white/10">
                 <Image
                   src={sector.img}
-                  alt={`${sector.name} BPO and call center services`}
+                  alt={sector.imgAlt ?? `${sector.name} BPO and call center services`}
                   fill
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="object-cover"
@@ -235,6 +244,51 @@ export default function SectorPage({ params }: { params: Params }) {
           </div>
         </section>
 
+        {/* ---------- Pipeline (coded graphic, sectors that opt in) ---------- */}
+        {sector.graphics === "ai-data" && (
+          <section className="bg-soft py-16 lg:py-20">
+            <div className="container-x">
+              <Reveal>
+                <AiDataPipeline />
+              </Reveal>
+            </div>
+          </section>
+        )}
+
+        {/* ---------- Voice data collection (photo, ai-data sector only) ---------- */}
+        {sector.graphics === "ai-data" && (
+          <section className="bg-white py-20 lg:py-32">
+            <div className="container-x grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+              <Reveal>
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[24px] shadow-lg border border-black/5">
+                  <Image
+                    src={sector.gallery[0]}
+                    alt="Consented multilingual voice recording for AI training data collection"
+                    fill
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              </Reveal>
+              <Reveal>
+                <span className="block text-[0.68rem] font-bold tracking-[0.18em] uppercase text-primary mb-3">
+                  Data You Can&rsquo;t Buy
+                </span>
+                <h2 className="font-display text-[32px] font-extrabold leading-tight tracking-tight sm:text-[42px]">
+                  Consented voice data, recorded to your spec.
+                </h2>
+                <p className="mt-6 text-[16px] leading-relaxed text-body">
+                  No dataset vendor has your specific support scenarios, your regional
+                  dialects, or your users&rsquo; conversational patterns. We record it — natural
+                  conversational voice, image-prompted speech, and simulated support
+                  interactions, with documented consent and demographic spread — built to the
+                  language and use case your model actually needs.
+                </p>
+              </Reveal>
+            </div>
+          </section>
+        )}
+
         {/* ---------- Capabilities (Conditional Layout) ---------- */}
         {sector.groupedCapabilities ? (
           <section className="bg-white py-20 lg:py-32">
@@ -249,6 +303,12 @@ export default function SectorPage({ params }: { params: Params }) {
                   </h2>
                 </div>
               </Reveal>
+
+              {sector.graphics === "ai-data" && (
+                <Reveal>
+                  <AiDataModalityMatrix />
+                </Reveal>
+              )}
 
               <div className="mx-auto max-w-5xl space-y-8">
                 {sector.groupedCapabilities.map((g, i) => (
@@ -438,6 +498,7 @@ export default function SectorPage({ params }: { params: Params }) {
                     </li>
                   ))}
                 </ul>
+                {sector.graphics === "ai-data" && <AiDataQaFlow />}
               </div>
             </Reveal>
 
@@ -518,6 +579,46 @@ export default function SectorPage({ params }: { params: Params }) {
                   </div>
                 </div>
               </Reveal>
+            </div>
+          </section>
+        )}
+
+        {/* ---------- Related sectors (sectors with no matching case study) ---------- */}
+        {!caseStudy && related && related.length > 0 && (
+          <section className="bg-cream py-20 lg:py-32">
+            <div className="container-x">
+              <Reveal>
+                <div className="mx-auto max-w-3xl text-center mb-16">
+                  <span className="block text-[0.68rem] font-bold tracking-[0.18em] uppercase text-primary mb-3">
+                    Related Work
+                  </span>
+                  <h2 className="font-display text-[32px] font-extrabold leading-tight tracking-tight sm:text-[42px]">
+                    Where else we run this kind of team.
+                  </h2>
+                </div>
+              </Reveal>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                {related.map((r) => (
+                  <Reveal key={r.slug}>
+                    <Link
+                      href={`/sectors/${r.slug}/`}
+                      className="group flex h-full flex-col rounded-[20px] border border-black/10 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_50px_rgba(24,48,224,0.06)]"
+                    >
+                      <SectorIcon name={r.icon} size={28} />
+                      <h3 className="mt-5 font-display text-xl font-bold text-heading">
+                        {r.name}
+                      </h3>
+                      <p className="mt-3 flex-1 text-[15px] leading-relaxed text-body">
+                        {r.summary}
+                      </p>
+                      <span className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">
+                        See the sector
+                        <Arrow size={16} />
+                      </span>
+                    </Link>
+                  </Reveal>
+                ))}
+              </div>
             </div>
           </section>
         )}

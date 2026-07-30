@@ -117,6 +117,9 @@ export const SECTORS: Sector[] = [
     icon: "bank",
     img: "/assets/img/service3.webp",
     gallery: ["/assets/img/service5.webp", "/assets/img/hf-about.webp"],
+    metaTitle: "Financial Services BPO in Bangalore",
+    metaDescription:
+      "Compliance-first financial services BPO from Bengaluru — fraud alerts, dispute resolution and KYC follow-up, 100% audit-traceable under ISO 27001.",
     tagline:
       "Compliance-first support that protects customers and builds trust.",
     summary:
@@ -200,6 +203,9 @@ export const SECTORS: Sector[] = [
     icon: "cart",
     img: "/assets/img/service1-scaled.webp",
     gallery: ["/assets/img/service2.webp", "/assets/img/success.webp"],
+    metaTitle: "Ecommerce Customer Support Outsourcing",
+    metaDescription:
+      "Ecommerce customer support outsourcing from Bengaluru — order, returns and live-chat support across every channel, cutting resolution time 40% at peak.",
     tagline:
       "Omnichannel support that turns busy sale seasons into loyal customers.",
     summary:
@@ -284,6 +290,9 @@ export const SECTORS: Sector[] = [
     icon: "chip",
     img: "/assets/img/technology1.webp",
     gallery: ["/assets/img/technology2.webp", "/assets/img/question-image.webp"],
+    metaTitle: "Technical Support Outsourcing — Tier 1 & 2",
+    metaDescription:
+      "Outsource tier 1 and tier 2 technical support to Bengaluru — product-trained agents cleared 35% of backlog so engineers get back to building.",
     tagline: "Layered technical support that keeps pace with product growth.",
     summary:
       "Tier-1 and tier-2 technical support, onboarding assistance and SLA-backed escalation — so senior engineers stop answering routine tickets.",
@@ -367,6 +376,9 @@ export const SECTORS: Sector[] = [
     icon: "cloud",
     img: "/assets/img/technology2.webp",
     gallery: ["/assets/img/technology1.webp", "/assets/img/success.webp"],
+    metaTitle: "24/7 SaaS Customer Support Outsourcing",
+    metaDescription:
+      "24/7 follow-the-sun customer support for SaaS companies — omnichannel coverage, SLA-backed response and retention support run from our Bengaluru operations.",
     tagline:
       "Global, always-on omnichannel support that keeps users subscribed.",
     summary:
@@ -635,6 +647,9 @@ export const SECTORS: Sector[] = [
       "/assets/img/service1-scaled.webp",
       "/assets/img/question-image.webp",
     ],
+    metaTitle: "Real Estate Lead Qualification Services",
+    metaDescription:
+      "Real estate lead qualification services from Bengaluru — instant enquiry response and CRM-integrated viewing bookings that lifted booked viewings by 45%.",
     tagline: "Round-the-clock lead qualification that fills the sales pipeline.",
     summary:
       "Instant enquiry response, lead qualification, viewing scheduling and CRM hygiene — so agents spend their day closing rather than chasing.",
@@ -718,6 +733,9 @@ export const SECTORS: Sector[] = [
     icon: "heart",
     img: "/assets/img/hf-healthcare.webp",
     gallery: ["/assets/img/service2.webp", "/assets/img/hf-about.webp"],
+    metaTitle: "Healthcare BPO Services in India",
+    metaDescription:
+      "HIPAA-aware healthcare BPO from Bengaluru — patient scheduling, insurance queries and triage routing that cut wait times 50%, lifted satisfaction 30%.",
     tagline:
       "Compassionate, always-on patient support that scales with demand.",
     summary:

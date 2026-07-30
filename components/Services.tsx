@@ -128,22 +128,25 @@ export default function Services() {
         {/* Mobile & tablet: stacked cards */}
         <div className="mt-12 space-y-5 lg:hidden">
           {PANELS.map((p) => (
-            <div key={p.n} className="relative overflow-hidden rounded-[18px]">
-              <Image
-                src={p.img}
-                alt={p.name}
-                width={640}
-                height={460}
-                className="h-80 w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,14,31,0.3)_15%,rgba(10,14,31,0.95)_100%)]" />
-              <div className="absolute inset-x-0 bottom-0 p-6">
-                <span className="font-display text-sm font-bold text-gold">
+            <div
+              key={p.n}
+              className="overflow-hidden rounded-[18px] bg-white/5"
+            >
+              <div className="relative h-48 w-full sm:h-56">
+                <Image
+                  src={p.img}
+                  alt={p.name}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,14,31,0.1)_0%,rgba(10,14,31,0.6)_100%)]" />
+                <span className="absolute left-6 top-5 font-display text-sm font-bold text-gold">
                   {p.n}
                 </span>
-                <div className="mt-1">
-                  <ExpandedContent p={p} />
-                </div>
+              </div>
+              <div className="p-6">
+                <ExpandedContent p={p} />
               </div>
             </div>
           ))}

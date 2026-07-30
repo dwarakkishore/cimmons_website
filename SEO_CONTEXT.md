@@ -27,7 +27,7 @@ Name/Address/Phone (NAP) across the web is a direct local-ranking factor.
 | Sales email | connect@cimmons.in |
 | HR email | hr@cimmons.in |
 | Founded | 2020 (footer: "© 2020–…") |
-| Scale (for schema/proof) | 356+ employees, 14+ clients |
+| Scale (for schema/proof) | 356+ employees, 25+ clients |
 | Hours | Confirm with client (assume Mon–Sat, 24/7 operations for delivery) |
 | LinkedIn | Company page URL — **get this from client** (personal profiles exist in `app/meet-team/page.tsx`) |
 
@@ -122,6 +122,18 @@ Estate, IT & SaaS (`lib/caseStudies.ts`). Each is a keyword cluster:
 | `app/meet-team/page.tsx` | cimmons leadership team | — | Meet the Team \| Cimmons |
 | `app/news/page.tsx` | bpo insights blog | call center tips, outsourcing guide | Insights & News — BPO & Customer Support \| Cimmons |
 | `app/case-studies/[slug]` | `{industry} bpo case study` | per-industry (see §1d) | {Industry} Case Study — {result} \| Cimmons |
+| `app/sectors/[slug]` (finance) | financial services bpo | fraud alert handling services, bank support outsourcing | Financial Services BPO in Bangalore \| Cimmons |
+| `app/sectors/[slug]` (retail-ecommerce) | ecommerce customer support outsourcing | order management support, retail bpo bangalore | Ecommerce Customer Support Outsourcing \| Cimmons |
+| `app/sectors/[slug]` (technology) | outsource technical support tier 1 tier 2 | technical support outsourcing, product support bpo | Technical Support Outsourcing — Tier 1 & 2 \| Cimmons |
+| `app/sectors/[slug]` (it-saas) | 24/7 customer support for saas companies | saas customer support outsourcing, follow-the-sun support | 24/7 SaaS Customer Support Outsourcing \| Cimmons |
+| `app/sectors/[slug]` (ai-data-services) | data annotation services in bangalore | ai training data services, human-in-the-loop data labeling, multilingual voice data collection india | Data Annotation Services in Bangalore \| Cimmons |
+| `app/sectors/[slug]` (real-estate) | real estate lead qualification services | property bpo, real estate call center bangalore | Real Estate Lead Qualification Services \| Cimmons |
+| `app/sectors/[slug]` (healthcare) | healthcare bpo services india | patient support outsourcing, hipaa compliant medical answering service | Healthcare BPO Services in India \| Cimmons |
+
+> Note: `technology` (tier-1/2 product support, bug triage) and `it-saas`
+> (24/7 follow-the-sun retention/billing support) both sit in the SaaS-support
+> cluster — kept on separate primary keywords above so they don't cannibalize
+> each other; see §1e.
 
 **Title rules:** primary keyword first, brand last, under ~60 chars, unique per page.
 **Meta description rules:** 140–160 chars, include primary keyword + a reason to click
